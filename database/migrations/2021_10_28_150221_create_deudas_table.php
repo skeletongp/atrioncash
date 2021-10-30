@@ -21,6 +21,7 @@ class CreateDeudasTable extends Migration
             $table->enum('periodicidad',['diario','semanal','quincenal','mensual']);
             $table->integer('cuotas');
             $table->foreignId('cliente_id')->constrained();
+            $table->foreignId('negocio_id')->constrained();
             $table->softDeletes();
             $table->timestamps();
         });

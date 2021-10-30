@@ -19,6 +19,7 @@ class CreateGastosTable extends Migration
             $table->string('concepto');
             $table->date('fecha');
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('negocio_id')->constrained();
             $table->softDeletes();
             $table->timestamps();
         });

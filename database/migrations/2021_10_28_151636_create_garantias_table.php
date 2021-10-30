@@ -21,6 +21,7 @@ class CreateGarantiasTable extends Migration
             $table->enum('status',['recibido','devuelto']);
             $table->foreignId('cliente_id')->constrained();
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('negocio_id')->constrained();
             $table->timestamps();
         });
     }

@@ -1,6 +1,6 @@
 @props(['title', 'subtitle', 'actionText', 'actionLink', 'icon'])
 <div
-    class="card transition bg-white h-96 w-72  m-auto top-0 bottom-0 shadow-2xl transform hover:scale-105 overflow-hidden">
+    class="card transition select-none bg-white h-96 w-72  m-auto top-0 bottom-0 shadow-2xl transform hover:scale-105 overflow-hidden">
     <h2 class="transition dto-num">{{ $title }}<br><small
             class=" font-normal text-base">{{ $subtitle }}</small>
     </h2>

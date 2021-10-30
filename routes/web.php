@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,3 +32,10 @@ Route::get('/auth/register', [AuthController::class, 'register'])->name('auth.re
 Route::get('/auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
 Route::post('/auth/access', [AuthController::class, 'access'])->name('auth.access');
 Route::post('/auth/store', [AuthController::class, 'store'])->name('auth.store');
+
+Route::middleware(['auth'])->group(function () {
+   /* Clientes Routes */
+   Route::resource('clientes',ClienteController::class)->names('clientes');
+});
+
+

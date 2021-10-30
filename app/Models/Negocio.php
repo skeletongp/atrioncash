@@ -22,4 +22,12 @@ class Negocio extends Model
     {
         return $this->belongsTo(Balance::class);
     }
+    public function clientes()
+    {
+        return $this->hasMany(Cliente::class);
+    }
+    public function cuotas()
+    {
+       return $this->hasMany(Cuota::class);
+    }
 }

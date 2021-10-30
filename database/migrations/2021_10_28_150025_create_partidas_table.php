@@ -20,6 +20,7 @@ class CreatePartidasTable extends Migration
             $table->date('fecha');
             $table->foreignId('cliente_id')->constrained();
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('negocio_id')->constrained();
             $table->softDeletes();
             $table->timestamps();
         });

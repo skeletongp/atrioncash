@@ -12,6 +12,24 @@
 .hidden-menu{
     transform: translate(-100%, 0px);
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0;
+    /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+    /* Firefox */
+}
+button:active {
+    border-style: outset;
+    outline: none;
+    border: none;
+}
+
 button {
     border-style: outset;
     outline: none;
@@ -24,6 +42,8 @@ button {
 .bg-two{
     background-color: #36d6e2;
 }
+
+
 .bg-three{
     background-color: #73ecf5;
 }

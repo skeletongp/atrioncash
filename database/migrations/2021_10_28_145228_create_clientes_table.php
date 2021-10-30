@@ -19,8 +19,9 @@ class CreateClientesTable extends Migration
             $table->string('lastname');
             $table->string('email');
             $table->string('phone');
+            $table->decimal('deuda');
             $table->enum('status',['al día','atrasado']);
-            $table->foreignId('negocio_id')->nullable()->constrained();
+            $table->foreignId('negocio_id')->constrained();
             $table->softDeletes();
             $table->timestamps();
         });

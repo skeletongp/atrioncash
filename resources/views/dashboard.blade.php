@@ -33,8 +33,8 @@
     <x-menu></x-menu>
     <div class=" ">
         @hasSection('body')
-            <div class="w-screen h-scren max-h-screen max-w-7xl mx-auto p-4 pt-16 bg-red-100">
-                @yield('body')
+            <div class="w-screen h-scren max-h-screen max-w-7xl mx-auto p-4 pt-16 pb-16 md:pb-4 bg-white overflow-hidden">
+                    @yield('body')
             </div>
 
         @else
@@ -42,17 +42,17 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto gap-6 bg-three p-3 text-center w-full">
                    
                     <x-grid-stat title="{{ $title1 }}" subtitle="{{ $subtitle1 }}" actionText="Balance General"
-                        actionLink="#" icon="fa-dollar-sign" />
-
-                    <x-grid-stat title="{{ $title1 }}" subtitle="{{ $subtitle1 }}" actionText="Balance General"
-                        actionLink="#" icon="fa-user"/>
-
-                    
-                    <x-grid-stat title="{{ $title1 }}" subtitle="{{ $subtitle1 }}" actionText="Balance General"
-                        actionLink="#" icon="fa-user"/>
+                        actionLink="{{$url1}}" icon="{{$icon1}}" />
 
                     <x-grid-stat title="{{ $title2 }}" subtitle="{{ $subtitle2 }}" actionText="Balance General"
-                        actionLink="#" icon="fa-user" />
+                        actionLink="{{$url2}}" icon="{{$icon2}}"/>
+
+                    
+                    <x-grid-stat title="{{ $title3 }}" subtitle="{{ $subtitle3 }}" actionText="Balance General"
+                        actionLink="{{$url3}}" icon="{{$icon3}}"/>
+
+                    <x-grid-stat title="{{ $title4 }}" subtitle="{{ $subtitle4 }}" actionText="Balance General"
+                        actionLink="{{$url4}}" icon="{{$icon4}}" />
 
              
                 </div>

@@ -22,6 +22,7 @@ class CreateCuotasTable extends Migration
             $table->decimal('capital');
             $table->decimal('deber');
             $table->foreignId('deuda_id')->constrained();
+            $table->foreignId('negocio_id')->constrained();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -12,9 +12,9 @@
         </a>
         <div class="w-full px-2">
             <div class="flex flex-col items-center w-full mt-4 text-white" >
-                <x-menu-item title="Clientes" icon="fa-users" key="btn-clientes">
+                <x-menu-item title="Clientes" icon="fa-users" key="btn-clientes" routes="clientes.*">
                     <x-dropdown-link href="">Añadir</x-dropdown-link>
-                    <x-dropdown-link href="">Activos</x-dropdown-link>
+                    <x-dropdown-link href="{{route('clientes.index')}}">Activos</x-dropdown-link>
                     <x-dropdown-link href="">Atrasados</x-dropdown-link>
                     <x-dropdown-link href="">Historial</x-dropdown-link>
                 </x-menu-item>
