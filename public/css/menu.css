@@ -30,6 +30,8 @@ button:active {
     border: none;
 }
 
+button:focus { outline: none; }
+
 button {
     border-style: outset;
     outline: none;
@@ -51,6 +53,10 @@ button {
 .text-one{
     color: #1C1427;
 }
+.text-two{
+    color: #0f5d62;
+}
+
 
 /* Card from Here (Grid-stat */
 .card_circle {

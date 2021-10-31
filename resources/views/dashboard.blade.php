@@ -33,7 +33,7 @@
     <x-menu></x-menu>
     <div class=" ">
         @hasSection('body')
-            <div class="w-screen h-scren max-h-screen max-w-7xl mx-auto p-4 pt-16 pb-16 md:pb-4 bg-white overflow-hidden">
+            <div class="w-screen h-screen max-h-screen max-w-7xl mx-auto lg:p-4 pt-16 pb-16 md:pb-4 bg-white overflow-hidden">
                     @yield('body')
             </div>
 

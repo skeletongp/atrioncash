@@ -37,7 +37,7 @@ class HomeController extends Controller
 
             $title3 = $clientes->count('id');
             $subtitle3 = "Clientes activos";
-            $url3 = '#';
+            $url3 = route('clientes.index');
             $icon3 = "fa-users";
 
             $title4 = $cuotas->where('fecha', '=', $today)->count('id');

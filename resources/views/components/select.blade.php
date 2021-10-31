@@ -2,6 +2,11 @@
 
 
 <div class=" py-0 flex justify-between items-center overflow-hidden rounded-md border relative w-full  {{ $class }}">
+    <div class="mx-1 left-2 w-max cursor-default select-none text-two">
+        @if (isset($label))
+            {{ $label }}
+        @endif
+    </div>
     <select {{ $disabled ? 'disabled' : '' }}
         style="padding-top: 0.70rem; padding-bottom:0.70rem; -webkit-appearance: none;"
         class=" flex-grow outline-none text-gray-900 dark:text-gray-300   px-2 leading-tight border border-white dark:bg-gray-800 dark:border-gray-800 overflow-hidden"

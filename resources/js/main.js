@@ -23,4 +23,28 @@ $('document').ready(function(){
         })
     })
 
+    $('.confirm').each(function(){
+        $(this).on('click', function(e){
+            form=$(this).attr('form')
+            form=$('#'+form);
+            e.preventDefault();
+            message=$(this).attr('data-label');
+            Swal.fire({
+                title: message,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Proceder',
+                cancelButtonText: 'Cancelar'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  form.submit();
+                } else{
+                    return false;
+                }
+              })
+        })
+    })
+
 })

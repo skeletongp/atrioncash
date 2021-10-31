@@ -40,193 +40,46 @@
             </x-slot>
             <x-slot name="col2">
 
+                @if ($clientes->count())
                 <div class=" grid grid-cols-1 md:grid-cols-2 lg:grid-rows-3 gap-6">
-                    <div class=" border border-gray-300 p-4 block bg-three bg-opacity-40">
+                    @foreach ($clientes as $cliente)
+                    <div class=" border border-gray-300 p-4 block bg-three bg-opacity-40 relative pt-10">
+                        <div class="h-9 w-full absolute top-0 left-0 p-1 flex items-center justify-end space-x-2 ">
+                            <x-dropdown-link href="{{route('clientes.show', $cliente)}}">
+                                <span class="fas fa-eye"></span>
+                            </x-dropdown-link>
+                        </div>
                         <div class="flex justify-between border-b py-1 border-gray-300">
                             <span class="font-bold uppercase">Nombre</span>
-                            <span class="font-semibold text-base">Ismael Conteras</span>
+                            <span class="font-semibold text-base">{{$cliente->fullname()}}</span>
                         </div>
                         <div class="flex justify-between border-b py-1 border-gray-300">
                             <span class="font-bold uppercase">Teléfono</span>
-                            <a href="https://api.whatsapp.com/send?phone=+18493153337&text=Edite+este+mensaje"
+                            <a href="https://api.whatsapp.com/send?phone=+1{{$cliente->phone}}&text=Edite+este+mensaje"
                                 target="_blank">
                                 <span class="font-semibold text-base "><span class="fab fa-whatsapp font-bold mr-1"></span>
-                                    849-315-3337</span>
+                                {{$cliente->phone}}</span>
                             </a>
                         </div>
                         <div class="flex justify-between border-b py-1 border-gray-300">
                             <span class="font-bold uppercase">Deuda</span>
-                            <span class="font-semibold text-base">${{ number_format(7540, 2) }}</span>
+                            <span class="font-semibold text-base">${{ number_format($cliente->deudas->sum('saldo_actual'), 2) }}</span>
                         </div>
                         <div class="flex justify-between border-b py-1 border-gray-300">
                             <span class="font-bold uppercase">Estado</span>
-                            <span class="{{ 'atrasado' == 'al día' ? '' : 'text-red-500' }} font-semibold text-base">Al
-                                día</span>
+                            <span class="{{ $cliente->status == 'al día' ? 'text-green-800' : 'text-red-500' }} capitalize font-semibold text-base">{{$cliente->status}}</span>
                         </div>
                     </div>
-                    <div class=" border border-gray-300 p-4 block bg-three bg-opacity-40">
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Nombre</span>
-                            <span class="font-semibold text-base">Ismael Conteras</span>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Teléfono</span>
-                            <a href="https://api.whatsapp.com/send?phone=+18493153337&text=Edite+este+mensaje"
-                                target="_blank">
-                                <span class="font-semibold text-base "><span class="fab fa-whatsapp font-bold mr-1"></span>
-                                    849-315-3337</span>
-                            </a>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Deuda</span>
-                            <span class="font-semibold text-base">${{ number_format(7540, 2) }}</span>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Estado</span>
-                            <span class="{{ 'atrasado' == 'al día' ? '' : 'text-red-500' }} font-semibold text-base">Al
-                                día</span>
-                        </div>
-                    </div>
-                    <div class=" border border-gray-300 p-4 block bg-three bg-opacity-40">
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Nombre</span>
-                            <span class="font-semibold text-base">Ismael Conteras</span>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Teléfono</span>
-                            <a href="https://api.whatsapp.com/send?phone=+18493153337&text=Edite+este+mensaje"
-                                target="_blank">
-                                <span class="font-semibold text-base "><span class="fab fa-whatsapp font-bold mr-1"></span>
-                                    849-315-3337</span>
-                            </a>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Deuda</span>
-                            <span class="font-semibold text-base">${{ number_format(7540, 2) }}</span>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Estado</span>
-                            <span class="{{ 'atrasado' == 'al día' ? '' : 'text-red-500' }} font-semibold text-base">Al
-                                día</span>
-                        </div>
-                    </div>
-                    <div class=" border border-gray-300 p-4 block bg-three bg-opacity-40">
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Nombre</span>
-                            <span class="font-semibold text-base">Ismael Conteras</span>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Teléfono</span>
-                            <a href="https://api.whatsapp.com/send?phone=+18493153337&text=Edite+este+mensaje"
-                                target="_blank">
-                                <span class="font-semibold text-base "><span class="fab fa-whatsapp font-bold mr-1"></span>
-                                    849-315-3337</span>
-                            </a>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Deuda</span>
-                            <span class="font-semibold text-base">${{ number_format(7540, 2) }}</span>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Estado</span>
-                            <span class="{{ 'atrasado' == 'al día' ? '' : 'text-red-500' }} font-semibold text-base">Al
-                                día</span>
-                        </div>
-                    </div>
-                    <div class=" border border-gray-300 p-4 block bg-three bg-opacity-40">
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Nombre</span>
-                            <span class="font-semibold text-base">Ismael Conteras</span>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Teléfono</span>
-                            <a href="https://api.whatsapp.com/send?phone=+18493153337&text=Edite+este+mensaje"
-                                target="_blank">
-                                <span class="font-semibold text-base "><span class="fab fa-whatsapp font-bold mr-1"></span>
-                                    849-315-3337</span>
-                            </a>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Deuda</span>
-                            <span class="font-semibold text-base">${{ number_format(7540, 2) }}</span>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Estado</span>
-                            <span class="{{ 'atrasado' == 'al día' ? '' : 'text-red-500' }} font-semibold text-base">Al
-                                día</span>
-                        </div>
-                    </div>
-                    <div class=" border border-gray-300 p-4 block bg-three bg-opacity-40">
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Nombre</span>
-                            <span class="font-semibold text-base">Ismael Conteras</span>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Teléfono</span>
-                            <a href="https://api.whatsapp.com/send?phone=+18493153337&text=Edite+este+mensaje"
-                                target="_blank">
-                                <span class="font-semibold text-base "><span class="fab fa-whatsapp font-bold mr-1"></span>
-                                    849-315-3337</span>
-                            </a>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Deuda</span>
-                            <span class="font-semibold text-base">${{ number_format(7540, 2) }}</span>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Estado</span>
-                            <span class="{{ 'atrasado' == 'al día' ? '' : 'text-red-500' }} font-semibold text-base">Al
-                                día</span>
-                        </div>
-                    </div>
-                    <div class=" border border-gray-300 p-4 block bg-three bg-opacity-40">
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Nombre</span>
-                            <span class="font-semibold text-base">Ismael Conteras</span>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Teléfono</span>
-                            <a href="https://api.whatsapp.com/send?phone=+18493153337&text=Edite+este+mensaje"
-                                target="_blank">
-                                <span class="font-semibold text-base "><span
-                                        class="fab fa-whatsapp font-bold mr-1"></span>
-                                    849-315-3337</span>
-                            </a>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Deuda</span>
-                            <span class="font-semibold text-base">${{ number_format(7540, 2) }}</span>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Estado</span>
-                            <span class="{{ 'atrasado' == 'al día' ? '' : 'text-red-500' }} font-semibold text-base">Al
-                                día</span>
-                        </div>
-                    </div>
-                    <div class=" border border-gray-300 p-4 block bg-three bg-opacity-40">
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Nombre</span>
-                            <span class="font-semibold text-base">Ismael Conteras</span>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Teléfono</span>
-                            <a href="https://api.whatsapp.com/send?phone=+18493153337&text=Edite+este+mensaje"
-                                target="_blank">
-                                <span class="font-semibold text-base "><span
-                                        class="fab fa-whatsapp font-bold mr-1"></span> 849-315-3337</span>
-                            </a>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Deuda</span>
-                            <span class="font-semibold text-base">${{ number_format(7540, 2) }}</span>
-                        </div>
-                        <div class="flex justify-between border-b py-1 border-gray-300">
-                            <span class="font-bold uppercase">Estado</span>
-                            <span class="{{ 'atrasado' == 'al día' ? '' : 'text-red-500' }} font-semibold text-base">Al
-                                día</span>
-                        </div>
-                    </div>
+                    @endforeach
+                    
+                  
                 </div>
+                <div class="my-2">
+                    {{$clientes->links()}}
+                </div>
+                @else
+                    <h1 class="text-center font-bold uppercase text-xl">No se encontraron resultados</h1>
+                @endif
 
             </x-slot>
         </x-two-columns>

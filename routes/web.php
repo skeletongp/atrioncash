@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\CuotaController;
+use App\Http\Controllers\DeudaController;
 use App\Http\Controllers\HomeController;
+use App\Models\Deuda;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +39,12 @@ Route::post('/auth/store', [AuthController::class, 'store'])->name('auth.store')
 Route::middleware(['auth'])->group(function () {
    /* Clientes Routes */
    Route::resource('clientes',ClienteController::class)->names('clientes');
+
+    /* Deudas Routes */
+    Route::resource('deudas',DeudaController::class)->names('deudas');
+
+     /* Cuotas Routes */
+     Route::resource('cuotas',CuotaController::class)->names('cuotas');
 });
 
 
