@@ -44,6 +44,9 @@ class Metodos
 
     public function crearDeuda($data, $cliente_id)
     {
+        if ($data['type']=='redito') {
+            $data['cuotas']=1;
+        }
        $deuda= Deuda::create(
             [
                 'saldo_inicial' => $data['deuda'],
@@ -52,6 +55,7 @@ class Metodos
                 'cuotas' => $data['cuotas'],
                 'negocio_id' => $data['negocio_id'],
                 'periodicidad' => $data['periodicidad'],
+                'type' => $data['type'],
                 'cliente_id' => $cliente_id,
             ]
         );

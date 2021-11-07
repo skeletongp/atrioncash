@@ -1,4 +1,4 @@
-@props(['disabled' => false, 'class' => '', 'money'=>false])
+@props(['disabled' => false, 'class' => '', 'money'=>false, 'wLabel'=>'w-24'])
 
 
 <div class="bg-white dark:bg-gray-800 rounded-md"> 
@@ -6,7 +6,9 @@
     <div class=" py-1 px-1 flex justify-between items-center rounde-md rounded-md border border-blue-200 relative overflow-hidden {{ $class }} hover:border-blue-400 hover:shadow-md">
         <div class="mx-1 left-2 w-max cursor-default select-none text-two">
             @if (isset($label))
-                {{ $label }}
+                <div class="border-r-2 pr-2 {{$wLabel}}">
+                    <span class="font-bold uppercase  ">{{$label}}</span>
+                </div>
             @endif
         </div>
         <input {{ $disabled ? 'disabled' : '' }}

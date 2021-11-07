@@ -1,11 +1,13 @@
-@props(['disabled' => false, 'class' => ''])
+@props(['disabled' => false, 'class' => '', 'wLabel'=>'w-24'])
 
 
 <div class=" py-0 flex justify-between items-center overflow-hidden rounded-md border relative w-full  {{ $class }}">
     <div class="mx-1 left-2 w-max cursor-default select-none text-two">
         @if (isset($label))
-            {{ $label }}
-        @endif
+        <div class="border-r-2 pr-2 {{$wLabel}}">
+            <span class="font-bold uppercase  ">{{$label}}</span>
+        </div>
+    @endif
     </div>
     <select {{ $disabled ? 'disabled' : '' }}
         style="padding-top: 0.70rem; padding-bottom:0.70rem; -webkit-appearance: none;"

@@ -48,7 +48,7 @@ class ClienteController extends Controller
         $data['phone'] = str_replace('-', '', $data['phone']);
         $negocio = Auth::user()->negocio;
         if ($negocio->balance->saldo_actual >= $data['deuda']) {
-            $clienteData = array_diff($data, [$data['interes'], $data['cuotas'], $data['periodicidad'], $data['fecha']]);
+            $clienteData = array_diff($data, [$data['interes'], $data['cuotas'], $data['periodicidad'], $data['fecha'], $data['type']]);
             $cliente = Cliente::create($clienteData);
             $method = new Metodos();
             $method->crearDeuda($data, $cliente->id);

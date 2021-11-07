@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Alert;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -20,7 +21,7 @@ class HomeController extends Controller
         $today = $today->toDateString();
         $balance = $user->negocio->balance;
         $clientes = $user->negocio->clientes;
-        $cuotas=$user->negocio->cuotas;
+        $cuotas = $user->negocio->cuotas;
         if ($user->hasRole('owner')) {
             $title1 = "$" . number_format($balance->saldo_actual, 2);
             $subtitle1 = "Dinero en saldo";
@@ -67,4 +68,5 @@ class HomeController extends Controller
                 "icon4" => $icon4,
             ]);
     }
+  
 }

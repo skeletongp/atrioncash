@@ -24,7 +24,7 @@
     </style>
 </head>
 
-<body class="antialiased" style="background-image: url({{asset('storage/fondo.jpg')}})">
+<body class="antialiased bg-white" style="scroll-behavior: smooth" >
     <div
         class="relative flex items-center justify-center h-screen  dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
      

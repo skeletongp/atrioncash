@@ -1,25 +1,16 @@
 @extends('dashboard')
 
 @section('body')
-    <div class=" overflow-auto h-screen pb-32 md:pb-2 md:pt-12 relative">
+    <div class=" overflow-auto h-screen pb-32 md:pb-2 md:mt-16 md:pt-16 relative">
         <a href="{{route('clientes.create')}}" 
         class="w-10 h-10 rounded-full bg-one flex items-center justify-center hover:bg-blue-400 absolute top-0 left-1 text-white hover:text-blue-800 transform hover:scale-105 shadow-xl">
                 <span class="fas fa-plus "> </span>
         </a>
-        <h1 class="mt-3 mb-5 text-center font-bold text-lg uppercase lg:hidden">Listado de clientes</h1>
+        <h1 class="mt-3 mb-5 text-center font-bold text-lg uppercase lg:hidden" id="hTitle">Listado de clientes</h1>
         <x-two-columns>
             <x-slot name="col1">
                 <div class="flex flex-col justify-between h-full px-4  ">
-                    <div class="hidden lg:flex flex-col justify-center h-full text-center space-y-4">
-                        <h1 class="text-center font-bold uppercase text-xl md:text-2xl">Clientes {{ $status }}</h1>
-                        <h2>
-                            Aquí podrás ver un listado de los clientes {{ $status }} del negocio, con algunos detalles
-                            y
-                            un
-                            acceso directo al perfil de cada uno. Si deseas añadir un nuevo cliente, presiona el botón
-                            <code>+</code> ubicado en la esquina superior izquierda.
-                        </h2>
-                    </div>
+                   
                     <div class="flex flex-col justify-center h-full text-center space-y-4">
                         <form action="">
                             <div class="text-left space-y-2">

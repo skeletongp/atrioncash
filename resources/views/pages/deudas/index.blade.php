@@ -1,8 +1,9 @@
 @extends('dashboard')
 
 @section('body')
-    <div class="p-12">
+    <div class="pb-12 px-4">
         @if ($deudas->count())
+            <h1 class="uppercase font-bold text-center text-xl my-2">Préstamos activos</h1>
             <div class="grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto gap-6 bg-three p-3 text-center w-full">
 
                 @foreach ($deudas as $deuda)

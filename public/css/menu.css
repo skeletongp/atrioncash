@@ -64,7 +64,7 @@ button {
     width: 450px;
     position: absolute;
     border-radius: 50%;
-    margin-left: -75px;
+    margin-left: -78px;
 }
 .card:hover .card_circle {
     border-radius: 0;

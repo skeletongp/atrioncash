@@ -1,318 +1,369 @@
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <h3 class="h-info" style="float: right">{{ date('d M, Y', strtotime($cuota->created_at)) }}</h3>
-</head>
-<div class="body">
-    @if ($status==0)
-    <div class="cancelado">
-
-    </div>
-@endif
-    <div class="div-title">
-        <div class="logo"></div>
-        <h3 class="h-title">{{ $negocio->name }}</h3>
-        <h3 class="h-subtitle"><i class="icon-phone-sign"></i>
-            {{ $negocio->phone }}</h3>
-        <h3 class="h-subtitle">{{ $negocio->location }}</h3>
-        <h3 class="h-subtitle">{{ $negocio->address }}</h3>
-    </div>
-    <hr>
-
-    {{ setlocale(LC_ALL, 'es_ES.UTF-8') }}
-    <div class="info">
-        <table style="width: 70mm; margin: 0 auto 0 auto">
-            <tr>
-                <td style="width:30mm; text-align:center">
-
-                    <h3 class="h-name">Pagado por:</h3>
-                    <h3 class="h-info">{{ $cliente->fullname() }}</h3>
-                    <h3 class="h-info">Tel.: {{ $cliente->phone }}</h3>
-                </td>
-                <td style="width:30mm; text-align:center; border-left: dotted 0.3px black;">
-
-                    <h3 class="h-name">Cobrado por:</h3>
-                    <h3 class="h-info">{{ $user->fullname() }}</h3>
-                    <h3 class="h-info">Tel.: {{ $user->phone }}</h3>
-
-                </td>
-            </tr>
-        </table>
-    </div>
-    <hr>
-    <div class="details">
-        <table class="table">
-
-            <tbody class="tbody">
-                <tr class="trbody" style="font-size: large">
-                    <td
-                        style="width:35mm; max-width: 35mm; font-weight:bold; text-transform:uppercase; font-size:1.25rem">
-                        Saldo Inicial</td>
-                    <td style="max-width: 5mm; font-weight: bold; font-size:1.1rem">
-                        ${{ number_format($cuota->deuda->saldo_inicial, 2) }}</td>
-                </tr>
-                <tr class="trbody" style="font-size: large">
-                    <td
-                        style="width:35mm; max-width: 35mm; font-weight:bold; text-transform:uppercase; font-size:1.25rem">
-                        Saldo Pendiente</td>
-                    <td style="max-width: 5mm; font-weight: bold; font-size:1.1rem">
-                        ${{ number_format($cuota->deuda->saldo_actual+$cuota->capital, 2) }}</td>
-                </tr>
-                <tr style="margin-top:10rem; background-color: #fff">
-                    <td colspan="2" class="td-total" style="color: #fff">
-                        ------------------------------------------------------------------------------------</td>
-                </tr>
-
-                <tr class="trbody" style="font-size: large">
-                    <td
-                        style="width:35mm; max-width: 35mm; font-weight:bold; text-transform:uppercase; font-size:1.25rem">
-                        Capital abonado</td>
-                    <td style="max-width: 5mm; font-weight: bold; font-size:1.1rem">
-                        ${{ number_format($cuota->capital, 2) }}</td>
-                </tr>
-                <tr class="trbody" style="font-size: large">
-                    <td
-                        style="width:35mm; max-width: 35mm; font-weight:bold; text-transform:uppercase; font-size:1.25rem">
-                        Interés abonado</td>
-                    <td style="max-width: 5mm; font-weight: bold; font-size:1.1rem">
-                        ${{ number_format($cuota->interes, 2) }}</td>
-                </tr>
-                <tr class="trbody" style="font-size: large">
-                    <td
-                        style="width:35mm; max-width: 35mm; font-weight:bold; text-transform:uppercase; font-size:1.25rem">
-                        Cuota total</td>
-                    <td style="max-width: 5mm; font-weight: bold; font-size:1.1rem">
-                        ${{ number_format($cuota->deber, 2) }}</td>
-                </tr>
-
-                <tr style="margin-top:10rem; background-color: #fff">
-                    <td colspan="4" class="td-total" style="color: #fff">
-                        ------------------------------------------------------------------------------------</td>
-                </tr>
-
-            </tbody>
-        </table>
-    </div>
-    <table class="tb_firm">
-        <tbody>
-            <tr>
-                <td>
-                    <div class="firm">
-                        <h3>Cajero: </h3>
-                        <span>{{ $cuota->name }}</span>
-                    </div>
-                </td>
-               
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="footer">
-        <h3>¡GRACIAS POR PREFERIRNOS!</h3>
-        @if ($cuota->cash)
-            <h4>**{{ $cuota->note }} **</h4>
-            <h4>** Favor revisar su factura al momento de pagar.**</h4>
-            <h4>** No se aceptan devoluciones.**</h4>
-        @else
-            <h4>** Ticket para fines de estimación.**</h4>
-            <h4>** Los precios pueden variar al momento de la compra.**</h4>
-            <h4>** Trabajamos con un abono del 50% antes de iniciar un trabajo.**</h4>
-        @endif
-    </div>
-</div>
-<script type="text/javascript">
-    try {
-        this.print();
-    } catch (e) {
-        window.onload = window.print;
-    }
-</script>
-
-
+<main class="ticket">
+    <section class="ticket-sub">
+        <h3>Admit One</h3>
+        <p>No 06900666</p>
+    </section>
+    <section class="ticket-main">
+        <section class="ticket-seat">
+            <h3>Lower Box Seat <span>$30<span></h3>
+            <div class="ticket-seat-box">
+                <p>Section</p>
+                <h4>06</h4>
+            </div>
+            <div class="ticket-seat-box">
+                <p>Box</p>
+                <h4>9</h4>
+            </div>
+            <div class="ticket-seat-box">
+                <p>Seat</p>
+                <h4>69</h4>
+            </div>
+        </section>
+        <section class="ticket-info">
+            <div class="ticket-info-brand">
+                <h3>Codepen Brawl</h3>
+            </div>
+            <div class="ticket-info-brawler">
+                <div class="brawler">
+                    <span>Hila</span>
+                    <span>Rious</span>
+                </div>
+                <div class="separator">VS</div>
+                <div class="brawler">
+                    <span>Biggus</span>
+                    <span>Toesus</span>
+                </div>
+            </div>
+            <div class="ticket-info-referee">
+                <span>On-Ring Referee</span>
+                <span>Ligma Dee</span>
+            </div>
+            <div class="ticket-info-date">
+                <p>August 09, 6PM</p>
+            </div>
+            <div class="ticket-info-misc">
+                <p>This ticket is fictional</p>
+            </div>
+        </section>
+    </section>
+</main>
 <style>
-    * {
-        font-size: 10px;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        transform: scale(0.99)
+    @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap");
+
+    :root {
+        --color-primary: #9fa8da;
+        --color-secondary: #3949ab;
+        --color-tertiary: #5c6bc0;
+        --color-bg: #263238;
+        --font-heading: Arial, helvetica;
+        --font-body: "open sans", "Roboto", sans-serif;
+        --font-misc: "Oswald", "monospace", "courier";
     }
 
-
-    @page {
-        size: 80mm 257mm;
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
         padding: 0;
-        margin: 3mm 1mm 0 1mm
+        margin: 0;
+        backface-visibility: hidden;
     }
 
-    .body {
-        max-width: 80mm;
-        min-width: 80mm;
-        margin: 0 auto 0 auto;
-        padding: 0;
-        position: relative;
-    }
-
-    .div-title {
-        text-align: center
-    }
-
-    .logo {
-        width: 20mm;
-        height: 20mm;
-
-        border-radius: 3.8rem 3.8rem 3.8rem 3.8rem;
-        background-color: #BC544B;
-        margin: 0 auto 0 auto;
-        background-position: center;
-        background-size: cover;
-        background-image: url(<?php echo $negocio->photo(); ?>);
-    }
-
-    .h-title {
-        margin-top: 5px;
-        font-size: 15px;
-        text-transform: uppercase;
-        font-weight: bold;
-    }
-
-    .h-subtitle {
-        margin-top: 5px;
-        font-size: 12px;
-        text-transform: capitalize;
-        font-weight: bold;
-    }
-
-    .div-title h3 {
-        margin-bottom: -4px;
-    }
-
-    hr {
-        border-top: #888 1px;
-        margin: 10px 2px 10px 2px;
-    }
-
-    .info {
-
-        margin: 0px 5px 0px 5px;
-    }
-
-    .info-factura {
-        text-align: right;
-    }
-
-    .cliente {}
-
-    .info div {
-        height: 18mm;
-        width: 46%;
-        padding: 0.3rem;
-    }
-
-    .h-name {
-        text-transform: uppercase;
-        font-weight: bold;
-        font-size: 13px;
-        margin-bottom: 4px;
-        margin-top: -1px
-    }
-
-    .h-info {
-        font-weight: 300;
-        font-size: 13px;
-        margin-bottom: -2px;
-        margin-top: 1px
-    }
-
-    .details {}
-
-    .table {
+    body {
+        background-color: var(--color-bg);
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100%;
-        border-collapse: collapse;
-        margin-left: 30%
+        min-height: 100vh;
+        padding: 20px;
     }
 
-    .thead th {
-        padding: 4px 2px 4px 2px;
-        text-transform: uppercase
-    }
-
-    .tbody td {
-        padding: 1px 2px 1px 2px;
-
-    }
-
-    .tbody .trbody {
-        border-top: rgba(200, 200, 200, 0.25) solid 0.05px;
-        text-align: left;
-    }
-
-    .td-total {
-        text-align: right;
+    h3,
+    h4 {
+        font-family: var(--font-heading);
         font-weight: bold;
-        font-size: 11px;
         text-transform: uppercase;
+        letter-spacing: 2px;
     }
 
+    .ticket {
+        background-color: var(--color-primary);
+        color: var(--color-secondary);
+        width: 600px;
+        height: auto;
+        display: grid;
+        grid-template-columns: 106px calc(100% - 106px);
+        font-family: var(--font-body);
+    }
 
-
-    .footer {
-        margin-top: 20px;
+    .ticket-sub {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
         text-align: center;
-        height: 7.5rem;
+        padding: 10px 10px;
+        border-right: 6px dotted var(--color-bg);
+        position: relative;
+        z-index: 1;
     }
 
-    .footer h3 {
+    .ticket-sub::before,
+    .ticket-sub::after {
+        background-color: var(--color-bg);
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        content: "";
+        position: absolute;
+        z-index: 2;
+        top: -14px;
+        right: -14px;
+    }
+
+    .ticket-sub::after {
+        top: unset;
+        bottom: -14px;
+    }
+
+    .ticket-sub h3 {
+        font-size: 30px;
+        padding: 10px 8px 10px 4px;
+        background: var(--color-tertiary);
+        color: white;
+    }
+
+    .ticket-sub h3::before,
+    .ticket-sub h3::after {
+        background-color: var(--color-bg);
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        content: "";
+        position: absolute;
+        z-index: 2;
+        top: -18px;
+        left: -22px;
+    }
+
+    .ticket-sub h3::after {
+        top: unset;
+        bottom: -18px;
+    }
+
+    .ticket-sub p {
+        font-size: 18px;
+        letter-spacing: 8px;
+        font-weight: 500;
+        padding: 14px 4px 14px 0;
+        text-align: center;
+    }
+
+    .ticket-sub p::before {
+        content: "";
+        width: 2px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        right: calc(100% - 3px);
+        border-right: dotted 5px var(--color-bg);
+    }
+
+    .ticket-sub p::after {
+        content: "";
+        width: calc(100% - 20px);
+        height: calc(100% - 20px);
+        box-shadow: inset 0 0 0 2px var(--color-secondary);
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+
+    .ticket-main {
+        padding: 10px;
+        display: grid;
+        grid-template-columns: 23% 77%;
+    }
+
+    .ticket-seat {
+        display: grid;
+        grid-template-areas:
+            "suba head"
+            "subb head"
+            "subc head";
+        box-shadow: inset 0 0 0 2px var(--color-secondary);
+    }
+
+    .ticket-seat>h3 {
+        grid-area: head;
+        height: 100%;
+        writing-mode: vertical-rl;
+        text-orientation: sideways;
+        padding: 12px 10px 12px 2px;
+        background-color: var(--color-tertiary);
+        color: white;
+        position: relative;
+        z-index: 1;
+        padding-bottom: 80px;
+        border-top: 2px solid var(--color-secondary);
+        border-bottom: 2px solid var(--color-secondary);
+    }
+
+    .ticket-seat>h3 span {
+        position: absolute;
+        bottom: 0;
+        right: calc(50% + 1px);
+        width: 100%;
+        color: white;
+        padding: 10px 4px;
+        font-size: 1.6em;
+        z-index: 2;
+        transform: translateX(50%);
+    }
+
+    .ticket-seat>.ticket-seat-box:nth-of-type(1) {
+        grid-area: suba;
+    }
+
+    .ticket-seat>.ticket-seat-box:nth-of-type(2) {
+        grid-area: subb;
+    }
+
+    .ticket-seat>.ticket-seat-box:nth-of-type(3) {
+        grid-area: subc;
+    }
+
+    .ticket-seat>.ticket-seat-box {
+        writing-mode: vertical-rl;
+        text-orientation: sideways;
+        text-align: center;
+    }
+
+    .ticket-seat>.ticket-seat-box:not(:last-child) {
+        border-bottom: 2px solid var(--color-secondary);
+    }
+
+    .ticket-seat>.ticket-seat-box p {
+        font-weight: bold;
+        text-transform: uppercase;
         font-size: 14px;
+        padding-right: 4px;
+    }
+
+    .ticket-seat>.ticket-seat-box h4 {
+        font-weight: 1000;
+        font-size: 32px;
+        line-height: 32px;
+        padding-top: 6px;
+    }
+
+    .ticket-info {
+        padding=left: 10px;
         text-align: center;
-        width: fit-content;
-        margin-bottom: 3px;
+        display: grid;
+        grid-template-areas:
+            "brand"
+            "brawler"
+            "referee"
+            "date"
+            "misc";
+        box-shadow: inset 0 0 0 2px var(--color-secondary);
     }
 
-    .footer h4 {
-        font-size: 11px;
+    .ticket-info>div:not(:nth-last-child(-n + 2)) {
+        border-bottom: 2px dashed var(--color-secondary);
+    }
+
+    .ticket-info .ticket-info-brand {
+        grid-area: brand;
+        /* 	height: 50px;
+ line-height: 50px; */
+        align-self: center;
+        padding: 0 10px 8px;
+        font-size: 26px;
+        border-bottom: 2px dashed var(--color-secondary);
+    }
+
+    .ticket-info .ticket-info-brawler {
+        grid-area: brawler;
+        display: flex;
+        /* 	align-items: center; */
+        width: 100%;
+        margin-top: -11px;
+    }
+
+    .ticket-info .ticket-info-brawler .separator {
+        writing-mode: vertical-lr;
+        text-orientation: upright;
+        font-weight: 1000;
+        width: 40px;
+        padding: 0 calc(20px - 0.8em);
         text-align: center;
-        width: 70%;
-        margin: 0 auto 0 auto;
-        word-wrap: break-word;
+        font-family: var(--font-heading);
+        border-left: 2px dashed var(--color-secondary);
+        border-right: 2px dashed var(--color-secondary);
     }
 
-    .tb_firm {
-        width: 100%
+    .ticket-info .ticket-info-brawler .brawler {
+        width: calc(50% - 20px);
+        flex: 0 0 auto;
+        align-self: center;
     }
 
-    .tb_firm td {
-        text-align: center
-    }
-
-    .firm {
-        font-size: 12px;
-    }
-
-    .firm span {
-        text-transform: uppercase;
-        font-size: 11px;
-    }
-
-    .firm h3 {
-        margin-bottom: 5px;
-    }
-
-    .back {
+    .ticket-info .ticket-info-brawler .brawler span {
+        display: block;
+        font-size: 16px;
+        font-family: var(--font-misc);
         font-weight: bold;
-        font-size: 1.5rem;
-        cursor: pointer;
+        letter-spacing: 2px;
     }
 
-    .cancelado {
-        width: 50mm;
-        margin: auto;
-        z-index: 50;
-        top: 2mm;
-        height: 18mm;
-        position: fixed;
-        background-image: url('images/fueradefecha.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-color: transparent;
+    .ticket-info .ticket-info-brawler .brawler span:last-child {
+        font-size: 32px;
+        text-transform: uppercase;
+        margin-top: -8px;
+    }
+
+    .ticket-info .ticket-info-referee {
+        grid-area: referee;
+        align-self: center;
+        padding: 2px 8px 12px;
+    }
+
+    .ticket-info .ticket-info-referee span {
+        font-size: 16px;
+    }
+
+    .ticket-info .ticket-info-referee span:last-child {
+        font-size: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        padding-left: 10px;
+        font-family: var(--font-misc);
+    }
+
+    .ticket-info .ticket-info-date {
+        grid-area: date;
+        font-size: 22px;
+        line-height: 12px;
+        padding: 24px 10px 2px;
+        font-family: var(--font-heading);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        background-color: var(--color-tertiary);
+        color: white;
+        margin-top: -12px;
+        border-left: 2px solid var(--color-secondary);
+        border-right: 2px solid var(--color-secondary);
+    }
+
+    .ticket-info .ticket-info-misc {
+        grid-area: misc;
+        font-size: 10px;
+        align-self: center;
+        font-weight: 400;
+        font-family: var(--font-heading);
+        letter-spacing: 6px;
     }
 
 </style>

@@ -21,10 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    if(Auth::user()){
-        return view('dashboard');
-    }
-    return view('welcome');
+   return redirect()->route('home');
 })->name('welcome');
 
 Route::get('/home',[HomeController::class, 'index'])->middleware('auth')->name('home');

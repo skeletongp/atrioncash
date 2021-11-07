@@ -41,18 +41,9 @@ class DatabaseSeeder extends Seeder
             'username'=>'atrioncash',
             'password'=>bcrypt('atrioncash'),
             'rolename'=>'Administrador',
-        ]);
-        $user->syncRoles(['admin', 'owner','employee']);
-        $dueño=User::create([
-            'name'=>'Aurelina',
-            'lastname'=>'Frías',
-            'email'=>'aurelina@lasolución.com',
-            'phone'=>'809-765-4321',
-            'username'=>'aurelina',
-            'password'=>bcrypt('aurelina'),
-            'rolename'=>'Dueño',
             'negocio_id'=>$negocio->id
         ]);
-        $dueño->syncRoles(['owner']);
+        $user->syncRoles(['admin', 'owner','employee']);
+       
     }
 }

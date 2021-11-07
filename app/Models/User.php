@@ -42,14 +42,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function fullname()
+    public function getFullnameAttribute()
     {
         return $this->name . ' ' . $this->lastname;
     }
 
     public function photo()
     {
-        return 'https://ui-avatars.com/api/?name=' . urlencode($this->fullname()) . '&color=000000&background=EEEEEE&rounded=true&bold=true';
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->fullname) . '&color=000000&background=EEEEEE&rounded=true&bold=true';
     }
     public function negocio()
     {

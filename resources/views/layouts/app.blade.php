@@ -38,8 +38,8 @@
 
 </head>
 
-<body class="text-black bg-fixed bg-bottom md:bg-center bg-no-repeat"  
-style="background-image: url({{asset('storage/fondo.jpg')}}); overscroll-behavior: smoot">
+<body class="text-black bg-white bg-fixed bg-bottom md:bg-center bg-no-repeat"  
+style=" overscroll-behavior: smoot">
     @yield('content')
     <script>
         var sidebar = $('#sidebar');
@@ -55,7 +55,7 @@ style="background-image: url({{asset('storage/fondo.jpg')}}); overscroll-behavio
         }
     </script>
 </body>
-<footer class="fixed bottom-0 z-20 h-12 bg-one w-screen">
+<footer class="fixed bottom-0 z-20 h-10 bg-one w-screen">
 </footer>
 
 </html>

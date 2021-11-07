@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="h-screen font-sans  bg-cover bg-center" style="background-image: url('/fondo.jpg')">
+<div class="h-screen font-sans bg-white" style="scroll-behavior: smooth">
     <div class="container mx-auto h-full flex flex-1 justify-center items-center">
         <div class="w-full max-w-lg">
             <div class="leading-loose">

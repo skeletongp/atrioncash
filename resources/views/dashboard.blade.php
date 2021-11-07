@@ -33,28 +33,29 @@
     <x-menu></x-menu>
     <div class=" ">
         @hasSection('body')
-            <div class="w-screen h-screen max-h-screen max-w-7xl mx-auto lg:p-4 pt-16 pb-16 md:pb-4 bg-white overflow-hidden">
-                    @yield('body')
+            <div class="w-screen h-screen max-h-screen max-w-7xl mx-auto lg:p-4 pt-16  pb-32 md:pb-4 bg-white ">
+                @yield('body')
             </div>
 
         @else
-            <div class="w-screen h-screen max-w-7xl max-h-screen mx-auto md:p-4 pt-12 md:pt-16  bg-white ">
-                <div class="grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto gap-6 bg-three p-3 text-center w-full">
-                   
+            <div class="w-screen h-screen max-w-7xl max-h-screen mx-auto md:p-4 pt-12 md:pt-16 pb-32 md:pb-4  bg-white ">
+                <h1 class="font-bold uppercase text-xl md:text-xl lg:text-4xl text-center my-2 lg:my-10" id="hTitle">Bienvenido, {{ Auth::user()->fullname }}</h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto py-12 gap-6 bg-three p-3 text-center w-full">
+
                     <x-grid-stat title="{{ $title1 }}" subtitle="{{ $subtitle1 }}" actionText="Balance General"
-                        actionLink="{{$url1}}" icon="{{$icon1}}" />
+                        actionLink="{{ $url1 }}" icon="{{ $icon1 }}" />
 
-                    <x-grid-stat title="{{ $title2 }}" subtitle="{{ $subtitle2 }}" actionText="Balance General"
-                        actionLink="{{$url2}}" icon="{{$icon2}}"/>
+                    <x-grid-stat title="{{ $title2 }}" subtitle="{{ $subtitle2 }}" actionText="Ver Préstamos"
+                        actionLink="{{ $url2 }}" icon="{{ $icon2 }}" />
 
-                    
-                    <x-grid-stat title="{{ $title3 }}" subtitle="{{ $subtitle3 }}" actionText="Balance General"
-                        actionLink="{{$url3}}" icon="{{$icon3}}"/>
 
-                    <x-grid-stat title="{{ $title4 }}" subtitle="{{ $subtitle4 }}" actionText="Balance General"
-                        actionLink="{{$url4}}" icon="{{$icon4}}" />
+                    <x-grid-stat title="{{ $title3 }}" subtitle="{{ $subtitle3 }}" actionText="Ver Clientes"
+                        actionLink="{{ $url3 }}" icon="{{ $icon3 }}" />
 
-             
+                    <x-grid-stat title="{{ $title4 }}" subtitle="{{ $subtitle4 }}" actionText="Gestionar Cobros"
+                        actionLink="{{ $url4 }}" icon="{{ $icon4 }}" />
+
+
                 </div>
             </div>
         @endif

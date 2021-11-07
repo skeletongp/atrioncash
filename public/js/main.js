@@ -7,6 +7,7 @@ $('document').ready(function () {
   $('#btn-menu').on('click', function () {
     $('#span-menu').toggleClass('fa-bars fa-times');
     $('.main-menu').toggleClass('-translate-x-full');
+    $('#hTitle').toggle('', false);
   });
   $('.down-trigger').each(function () {
     $(this).on('click', function () {
