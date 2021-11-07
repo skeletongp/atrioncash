@@ -30,4 +30,14 @@ class Negocio extends Model
     {
        return $this->hasMany(Cuota::class);
     }
+
+    public function deudas()
+    {
+        return $this->hasMany(Deuda::class);
+    }
+
+    public function photo()
+    {
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=ffffff&background=000000&rounded=true&bold=true';
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Methods;
 
 use App\Models\Partida;
+use Carbon\Carbon;
+use PDF;
 
 class Metodos2
 {
@@ -21,12 +23,30 @@ class Metodos2
 
         /* Ajuste de Partida */
         Partida::create([
-            'salida'=>0,
-            'entrada'=>$cuota->deber,
-            'fecha'=>date('Y-m-d'),
-            'cliente_id'=>$cliente->id,
-            'user_id'=>$user->id,
-            'negocio_id'=>$negocio->id
+            'salida' => 0,
+            'entrada' => $cuota->deber,
+            'fecha' => date('Y-m-d'),
+            'cliente_id' => $cliente->id,
+            'user_id' => $user->id,
+            'negocio_id' => $negocio->id
         ]);
+    }
+    public function printPayedTicket($cuota, $user, $cliente, $negocio)
+    {
+        $status=1;
+        if(Carbon::createFromDate($cuota->fecha)<date('d-m-y')){
+           $status=0; 
+        };
+        $pdf = PDF::loadView(
+            'pages.pdfs.payed_tickets',
+            [
+                'cuota' => $cuota,
+                'user' => $user,
+                'cliente' => $cliente,
+                'negocio' => $negocio,
+                'status' => $status,
+            ]
+        );
+        return $pdf->stream(substr($cliente->name, 0, 3) . '_' . date('H_i_s') . '_' . $cuota->id . '.pdf');
     }
 }

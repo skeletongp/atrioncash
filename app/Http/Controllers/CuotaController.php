@@ -53,6 +53,7 @@ class CuotaController extends Controller
         $cuota->status='pagado';
         $cuota->save();
         $this->metodo->cobrarCuota($negocio, $cuota, $balance, $deuda, $cliente, $user);
+        return $this->metodo->printPayedTicket($cuota, $user, $cliente, $negocio);
     }
 
    

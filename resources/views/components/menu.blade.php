@@ -1,4 +1,3 @@
-
 <section class=" fixed left-0 pt-11 h-screen transform -translate-x-full lg:translate-x-0 main-menu z-40">
     <!-- Component Start -->
     <div
@@ -11,21 +10,24 @@
             </div>
         </a>
         <div class="w-full px-2">
-            <div class="flex flex-col items-center w-full mt-4 text-white" >
+            <div class="flex flex-col items-center w-full mt-4 text-white">
                 <x-menu-item title="Clientes" icon="fa-users" key="btn-clientes" routes="clientes.*">
-                    <x-dropdown-link href="{{route('clientes.create')}}" 
-                    :active="request()->routeIs('clientes.create')">
-                    Añadir
-                </x-dropdown-link>
-                    <x-dropdown-link href="{{route('clientes.index')}}"
-                    :active="request()->routeIs('clientes.index')">
-                    Activos
-                </x-dropdown-link>
+                    <x-dropdown-link href="{{ route('clientes.create') }}"
+                        :active="request()->routeIs('clientes.create')">
+                        Añadir
+                    </x-dropdown-link>
+                    <x-dropdown-link href="{{ route('clientes.index') }}"
+                        :active="request()->routeIs('clientes.index')">
+                        Activos
+                    </x-dropdown-link>
                     <x-dropdown-link href="">Atrasados</x-dropdown-link>
                     <x-dropdown-link href="">Historial</x-dropdown-link>
                 </x-menu-item>
-                <x-menu-item title="Préstamos" icon="fa-coins" key="btn-prestamos" routes="">
+                <x-menu-item title="Préstamos" icon="fa-coins" key="btn-prestamos" routes="deudas.*">
                     <x-dropdown-link href="">Nuevo</x-dropdown-link>
+                    <x-dropdown-link href="{{ route('deudas.index') }}" :active="request()->routeIs('deudas.index')">
+                        Listado
+                    </x-dropdown-link>
                     <x-dropdown-link href="">Cotizar</x-dropdown-link>
                     <x-dropdown-link href="">Atrasados</x-dropdown-link>
                     <x-dropdown-link href="">Vencidos</x-dropdown-link>

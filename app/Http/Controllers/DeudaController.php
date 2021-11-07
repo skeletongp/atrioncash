@@ -4,13 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Deuda;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DeudaController extends Controller
 {
+
+    public function __construct() {
+    }
     
     public function index()
     {
-        //
+        $negocio = Auth::user()->negocio;
+        $deudas=$negocio->deudas()->paginate(9);
+
+        return view('pages.deudas.index')
+        ->with([
+            'deudas'=>$deudas
+        ]);
     }
 
     
