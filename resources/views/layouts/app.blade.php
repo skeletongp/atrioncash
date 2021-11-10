@@ -38,7 +38,7 @@
 
 </head>
 
-<body class="text-black bg-white bg-fixed bg-bottom md:bg-center bg-no-repeat"  
+<body class="text-black bg-white bg-bottom md:bg-center bg-no-repeat"  
 style=" overscroll-behavior: smoot">
     @yield('content')
     <script>
@@ -56,6 +56,7 @@ style=" overscroll-behavior: smoot">
     </script>
 </body>
 <footer class="fixed bottom-0 z-20 h-10 bg-one w-screen">
+    <h1 class="text-center text-white my-2">®AtrionTech Solutions EIRL</h1>
 </footer>
 
 </html>

@@ -1,4 +1,4 @@
-@props(['title', 'subtitle', 'actionText', 'actionLink', 'icon'])
+@props(['title', 'subtitle', 'actionText', 'actionLink', 'icon', 'proxpago'])
 <div
     class="card transition select-none bg-white h-56 -py-8 w-72  m-auto top-0 bottom-0 shadow-2xl transform hover:scale-105 overflow-hidden rounded-xl">
     <h2 class="transition flex flex-col space-y-0 font-bold text-blue-500 mt-32 dto-num">
@@ -14,7 +14,7 @@
     <div class="card_circle bg-one h-96 -mt-72 transition flex items-end justify-center">
         <span class="text-2xl mb-8 font-bold text transition text-white flex flex-col space-y-0">
              <small class="text-xs">Próx. Pago</small>
-            {{date('d M Y')}}
+            {{$proxpago}}
         </span>
     </div>
 </div>

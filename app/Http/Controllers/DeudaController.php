@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Methods\Metodos;
 use App\Models\Deuda;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,7 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class DeudaController extends Controller
 {
 
+
     public function __construct() {
+       
     }
     
     public function index()
@@ -26,13 +29,23 @@ class DeudaController extends Controller
     
     public function create()
     {
-        //
+        $negocio=Auth::user()->negocio;
+        $clientes=$negocio->clientes;
+        return view('pages.deudas.create')
+        ->with([
+            'clientes'=>$clientes
+        ]);
     }
 
    
     public function store(Request $request)
     {
-        dd($request->all());
+       $data=$request->all();
+       $cliente_id=$data['cliente_id'];
+       $data['negocio_id']=Auth::user()->negocio_id;
+       $metodo=new Metodos();
+        $metodo->crearDeuda($data, $cliente_id);
+        return redirect()->route('deudas.index');
     }
 
    

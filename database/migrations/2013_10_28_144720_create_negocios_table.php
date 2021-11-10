@@ -6,11 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateNegociosTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+    
     public function up()
     {
         Schema::create('negocios', function (Blueprint $table) {
@@ -19,6 +15,7 @@ class CreateNegociosTable extends Migration
             $table->string('address');
             $table->string('phone');
             $table->foreignId('balance_id')->constrained();
+            $table->enum('status',['activo','pendiente','inactivo']);
             $table->softDeletes();
             $table->timestamps();
         });

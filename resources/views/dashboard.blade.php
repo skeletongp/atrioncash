@@ -4,7 +4,7 @@
 
     <!--Container -->
     <header class="flex justify-between items-center z-50 fixed w-full bg-one h-12 px-3 ">
-        <x-dropdown-link id="btn-menu" class=" cursor-pointer bg-one text-white hover:bg-black  lg:hidden z-50">
+        <x-dropdown-link id="btn-menu" class=" cursor-pointer bg-one text-white hover:bg-black menu-btn lg:hidden z-50">
             <span class="fas fa-bars text-2xl" id="span-menu"></span>
         </x-dropdown-link>
         <span class="uppercase text-2xl text-one font-bold hidden md:flex">
@@ -24,11 +24,13 @@
                 </div>
             </x-slot>
             <x-slot name="content">
-                <x-dropdown-link href="{{ route('auth.logout') }}">
+                <form action="{{ route('auth.logout') }}" id="fLogout"></form>
+                <x-dropdown-link form="fLogout" class="confirm cursor-pointer" data-label="¿Cerrar sesión?">
                     Salir
                 </x-dropdown-link>
             </x-slot>
         </x-dropdown>
+       
     </header>
     <x-menu></x-menu>
     <div class=" ">

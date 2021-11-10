@@ -14,7 +14,6 @@ class DatabaseSeeder extends Seeder
     
     public function run()
     {
-        $role = Role::create(['name' => 'writer']);
         // \App\Models\User::factory(10)->create();
         $admin=Role::create(['name'=>'admin']);
         $owner=Role::create(['name'=>'owner']);
@@ -31,6 +30,7 @@ class DatabaseSeeder extends Seeder
             'name'=>'Préstamos La Solución',
             'address'=>'Calle Los Frailes 22, SDO',
             'phone'=>'849-315-3337',
+            'status'=>'pendiente',
             'balance_id'=>$balance->id
         ]);
         $user=User::create([
@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
             'email'=>'cash@atriontech.com',
             'phone'=>'8493153337',
             'username'=>'atrioncash',
-            'password'=>bcrypt('atrioncash'),
+            'password'=>bcrypt(env('OWNER_PASSWORD')),
             'rolename'=>'Administrador',
             'negocio_id'=>$negocio->id
         ]);

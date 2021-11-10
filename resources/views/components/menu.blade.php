@@ -2,8 +2,7 @@
     <!-- Component Start -->
     <div
         class="flex flex-col select-none items-center w-44 md:w-52  h-full overflow-hidden text-one bg-one rounded   relative  ">
-        <a class="flex items-center w-full   py-2  bg-white hover:text-white"
-            href="{{ route('home') }}">
+        <a class="flex items-center w-full   py-2  bg-white hover:text-white" href="{{ route('home') }}">
             <div class="w-full h-8 md:h-12 bg-center   bg-contain bg-no-repeat"
                 style="background-image: url('/images/logo.png')">
             </div>
@@ -23,7 +22,9 @@
                     <x-dropdown-link href="">Historial</x-dropdown-link>
                 </x-menu-item>
                 <x-menu-item title="Préstamos" icon="fa-coins" key="btn-prestamos" routes="deudas.*">
-                    <x-dropdown-link href="">Nuevo</x-dropdown-link>
+                    <x-dropdown-link href="{{ route('deudas.create') }}" :active="request()->routeIs('deudas.create')">
+                        Nuevo
+                    </x-dropdown-link>
                     <x-dropdown-link href="{{ route('deudas.index') }}" :active="request()->routeIs('deudas.index')">
                         Listado
                     </x-dropdown-link>

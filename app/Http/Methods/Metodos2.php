@@ -2,29 +2,32 @@
 
 namespace App\Http\Methods;
 
+use App\Models\Balance;
+use App\Models\Negocio;
 use App\Models\Partida;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use PDF;
 
 class Metodos2
 {
-    public function cobrarCuota($negocio, $cuota, $balance, $deuda, $cliente, $user)
+    public function cobrarCuota($negocio, $cuota, $balance, $deuda, $cliente, $user, Request $request)
     {
         /* Ajuste del Balance del negocio */
-        $balance->saldo_actual = $balance->saldo_actual + $cuota->deber;
-        $balance->capital_cobrado = $balance->capital_cobrado + $cuota->capital;
-        $balance->capital_prestado = $balance->capital_prestado - $cuota->capital;
-        $balance->interes_cobrado = $balance->interes_cobrado + $cuota->interes;
+        $balance->saldo_actual = $balance->saldo_actual + $request->capital+$request->interes;
+        $balance->capital_cobrado = $balance->capital_cobrado + $request->capital;
+        $balance->capital_prestado = $balance->capital_prestado - $request->capital;
+        $balance->interes_cobrado = $balance->interes_cobrado + $request->interes;
         $balance->save();
 
         /* Ajuste de Deuda del Cliente */
-        $deuda->saldo_actual = $deuda->saldo_actual - $cuota->capital;
+        $deuda->saldo_actual = $deuda->saldo_actual - $request->capital;
         $deuda->save();
 
         /* Ajuste de Partida */
         Partida::create([
             'salida' => 0,
-            'entrada' => $cuota->deber,
+            'entrada' => $request->capital+$request->interes,
             'fecha' => date('Y-m-d'),
             'cliente_id' => $cliente->id,
             'user_id' => $user->id,
@@ -37,16 +40,65 @@ class Metodos2
         if(Carbon::createFromDate($cuota->fecha)<date('d-m-y')){
            $status=0; 
         };
-        $pdf = PDF::loadView(
-            'pages.pdfs.payed_tickets',
-            [
+       return view('pages.pdfs.payed_tickets')
+
+            ->with([
                 'cuota' => $cuota,
                 'user' => $user,
                 'cliente' => $cliente,
                 'negocio' => $negocio,
                 'status' => $status,
-            ]
-        );
-        return $pdf->stream(substr($cliente->name, 0, 3) . '_' . date('H_i_s') . '_' . $cuota->id . '.pdf');
+            ]);
+        
+    }
+    public function sumarfecha($fecha, $tiempo)
+    {
+        $fecha = Carbon::createFromDate($fecha);
+            switch ($tiempo) {
+                case 'diario':
+                    $fecha->addDay();
+                    $fecha_db = $fecha->toDateString();
+                    break;
+                case 'semanal':
+                    $fecha->addWeek();
+                    $fecha_db = $fecha->toDateString();
+                    break;
+                case 'quincenal':
+                    $fecha->addDays(15);
+                    $fecha_db = $fecha->toDateString();
+                    break;
+                case 'mensual':
+                    $fecha->addMonth();
+                    $fecha_db = $fecha->toDateString();
+                    break;
+           
+            }
+            return $fecha_db;
+    }
+    public function createBalance($balance)
+    {
+        $balance=Balance::create([
+            'saldo_inicial'=>$balance,
+            'saldo_actual'=>$balance,
+            'capital_cobrado'=>0,
+            'capital_prestado'=>0,
+            'interes_cobrado'=>0,
+
+        ]);
+        return $balance;
+    }
+    public function createNegocio($data)
+    {
+        $balance=$this->createBalance($data['balance']);
+        $negocio=Negocio::create([
+            'name'=>$data['Nname'],
+            'address'=>$data['address'],
+            'phone'=>$data['Nphone'],
+            'balance_id'=>$balance->id,
+            'status'=>'pendiente',
+
+        ]);
+        return $negocio;
+        
     }
 }

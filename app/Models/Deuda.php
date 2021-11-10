@@ -13,7 +13,7 @@ class Deuda extends Model
 
     protected $guarded=[];
 
-    public function Cuotas()
+    public function cuotas()
     {
         return $this->hasMany(Cuota::class);
     }
@@ -21,5 +21,16 @@ class Deuda extends Model
      {
          return $this->belongsTo(Cliente::class);
      }
-   
+     public function getProxpagoAttribute()
+     {
+         return $this->cuotas()->where('status','pendiente')->orderBy('id')->first();
+     }
+     
+     public function getTipoAttribute()
+     {
+         if ($this->type=='cuota') {
+             return "A cuotas";
+         }
+         return "A rédito";
+     }
 }

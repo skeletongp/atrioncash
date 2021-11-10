@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Alert;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -22,6 +24,7 @@ class HomeController extends Controller
         $balance = $user->negocio->balance;
         $clientes = $user->negocio->clientes;
         $cuotas = $user->negocio->cuotas;
+        $pendientes=$user->negocio->cuotas()->where('fecha',$today);
         if ($user->hasRole('owner')) {
             $title1 = "$" . number_format($balance->saldo_actual, 2);
             $subtitle1 = "Dinero en saldo";
@@ -39,9 +42,9 @@ class HomeController extends Controller
             $url3 = route('clientes.index');
             $icon3 = "fa-users";
 
-            $title4 = $cuotas->where('fecha', '=', $today)->count('id');
+            $title4 = $pendientes->count("id");
             $subtitle4 = "Pagos de hoy pendientes";
-            $url4 = '#';
+            $url4 = route('deudas.index');
             $icon4 = "fa-users";
         } else {
         }
@@ -68,5 +71,11 @@ class HomeController extends Controller
                 "icon4" => $icon4,
             ]);
     }
+  
+  
+    
+   
+    
+   
   
 }

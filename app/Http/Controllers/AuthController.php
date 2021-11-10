@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function __construct() {
-        $this->middleware(['auth','role:admin'])->only('register');
-    }
+    
    public function login()
    {
        if (Auth::user()) {

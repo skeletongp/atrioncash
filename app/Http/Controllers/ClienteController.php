@@ -49,6 +49,7 @@ class ClienteController extends Controller
         $negocio = Auth::user()->negocio;
         if ($negocio->balance->saldo_actual >= $data['deuda']) {
             $clienteData = array_diff($data, [$data['interes'], $data['cuotas'], $data['periodicidad'], $data['fecha'], $data['type']]);
+            $clienteData['negocio_id']=$negocio->id;
             $cliente = Cliente::create($clienteData);
             $method = new Metodos();
             $method->crearDeuda($data, $cliente->id);

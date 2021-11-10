@@ -9,6 +9,13 @@ $('document').ready(function () {
     $('.main-menu').toggleClass('-translate-x-full');
     $('#hTitle').toggle('', false);
   });
+  $(document).on("click", function (e) {
+    if ($(e.target).closest(".main-menu").length == 0 && !$(".main-menu").hasClass("-translate-x-full") && $(e.target).closest(".menu-btn").length == 0) {
+      $('#span-menu').toggleClass('fa-bars fa-times');
+      $('.main-menu').toggleClass('-translate-x-full');
+      $('#hTitle').toggle('', false);
+    }
+  });
   $('.down-trigger').each(function () {
     $(this).on('click', function () {
       id = $(this).attr('id');

@@ -1,7 +1,7 @@
 @extends('dashboard')
 
 @section('body')
-    <div class=" overflow-auto h-screen pb-32 md:pb-2 md:pt-12 relative">
+    <div class="  pb-32 md:pb-2 md:pt-12 relative md:mt-16">
 
         <h1 class="mt-3 mb-5 text-center font-bold text-lg uppercase lg:hidden">Detalle de la Deuda</h1>
         <x-two-columns>
@@ -39,78 +39,91 @@
             </x-slot>
             <x-slot name="col2">
                 <!-- component -->
-                <div class="text-gray-900 bg-one overflow-hidden px-0.5 relative">
-                    @if ($cuotas->count()>1)
-                        <div class="absolute top-1 right-1 px-2 py-2 rounded-full bg-gray-800  w-max text-white">
-                            <button form="c{{ $pendiente->id }}" class="confirm" data-label="¿Cobrar cuota?">
-                                <div class="md:hidden"> <span class="fas fa-hand-holding-usd text-2xl"></span></div>
-                                <span class="hidden md:block font-bold">Cobrar pendiente</span>
-                            </button>
-                        </div>
-                    @endif
-                    <div class="p-4 flex">
+                <div class="text-gray-900 bg-one overflow-hidden px-0.5 relative ">
+
+                    <div class="p-4 flex relative">
                         <h1 class="text-xl md:text-2xl font-bold uppercase flex flex-col">
                             Cuotas de la deuda
                             <small>{{ $cuotas->total() }} Cuotas por pagar</small>
                         </h1>
-                    </div>
-                    <div class="px-3 flex  overflow-auto ">
-                        <table class="w-full text-md bg-white shadow-md rounded-xl mb-4">
-                            <tbody>
-                                <tr class="border-b">
-                                    <th class="text-left p-3 px-2 md:px-4">Fecha</th>
-                                    <th class="text-left p-3 px-5">Inicial</th>
-                                    <th class="text-left p-3 px-2 md:px-4 hidden md:table-cell">Interés</th>
-                                    <th class="text-left p-3 px-2 md:px-4 hidden md:table-cell">Capital</th>
-                                    <th class="text-left p-3 px-2 md:px-4">Cuota</th>
-                                    <th class="text-left p-3 px-2 md:px-4">Restante</th>
-                                    <th class="text-left p-3 px-2 md:px-4 hidden md:table-cell"></th>
-                                    <th class="hidden md:table-cell"></th>
-                                </tr>
-
-
-                                @foreach ($cuotas as $cuota)
-                                    <tr data-label="¿Cobrar cuota?" form="c{{ $cuota->id }}"
-                                        class=" confirm cursor-pointer  border-b hover:bg-blue-50  select-none {{ $cuota->id == $pendiente->id ? 'bg-red-200' : 'bg-red-50' }}">
-                                        <td class="p-3 px-2 md:px-4">
-                                            {{ date_format(date_create($cuota->fecha), 'd/m/y') }}
-                                        </td>
-                                        <td class="p-3 px-2 md:px-4">${{ number_format($cuota->saldo, 2) }}</td>
-                                        <td class="p-3 px-2 md:px-4 hidden md:table-cell">
-                                            ${{ number_format($cuota->interes, 2) }}</td>
-                                        <td class="p-3 px-2 md:px-4 hidden md:table-cell">
-                                            ${{ number_format($cuota->capital, 2) }}</td>
-                                        <td class="p-3 px-2 md:px-4">${{ number_format($cuota->deber, 2) }}</td>
-                                        <td class="p-3 px-2 md:px-4 ">
-                                            ${{ number_format($cuota->saldo - $cuota->capital, 2) }}
-                                        </td>
-
-                                        <td class="p-3 px-4 hidden md:table-cell">
-                                            @if ($cuota->status == 'pendiente')
-                                                <button class="confirm" data-label="¿Cobrar cuota?"
-                                                    form="c{{ $cuota->id }}">
-                                                    <span class="fas fa-check text-yellow-500 hidden md:table-cell"></span>
-                                                </button>
-
-                                            @else
-                                                <span class="fas fa-check-double text-green-500"></span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    <form action="{{ route('cuotas.update', $cuota) }}" method="POST"
-                                        id="c{{ $cuota->id }}">
+                        <div class="absolute right-2 top-2">
+                            <x-dropdown width="w-72">
+                                <x-slot name="trigger">
+                                    <span class="fas fa-hand-holding-usd text-2xl lg:text-4xl cursor-pointer"></span>
+                                </x-slot>
+                                <x-slot name="content">
+                                    <form action="{{ route('cuotas.update', $pendiente->id) }}" class="m-2"
+                                        id="f{{ $pendiente->id }}" method="POST">
                                         @csrf
                                         @method('put')
+                                        <div class="my-2 {{ $deuda->type == 'cuota' ? 'hidden' : '' }}">
+                                            <x-input class="" type="number" wLabel="w-20" name="capital"
+                                                value="{{ $pendiente->capital }}">
+                                                <x-slot name="label">Capital</x-slot>
+                                                <x-slot name="icon"><span class="fas fa-dollar-sign"></span></x-slot>
+                                            </x-input>
+                                        </div>
+                                        <div class="my-2">
+                                            <x-input type="number" wLabel="w-20" readonly name="interes"
+                                                value="{{ $pendiente->interes }}">
+                                                <x-slot name="label">Interés</x-slot>
+                                                <x-slot name="icon"><span class="fas fa-dollar-sign"></span></x-slot>
+                                            </x-input>
+                                        </div>
+                                        <div class="flex justify-end">
+                                            <x-button form="f{{ $pendiente->id }}" class="confirm bg-two"
+                                                data-label="¿Proceder con el cobro?">
+                                                Cobrar
+                                            </x-button>
+                                        </div>
                                     </form>
+
+                                </x-slot>
+                            </x-dropdown>
+                        </div>
+                    </div>
+                    <div class="px-3 m-3 flex bg-white overflow-auto ">
+                        <table class=" relative border m-3">
+                            <tbody>
+                                <thead class="md:sticky top-0">
+                                    <tr>
+                                        <th scope="col" class="">Fecha</th>
+                                        <th scope="col">Balance</th>
+                                        <th scope="col">Capital</th>
+                                        <th scope="col">Interés</th>
+                                        <th scope="col">Total</th>
+                                    </tr>
+                                </thead>
+                                @foreach ($cuotas as $cuota)
+                                    <tr>
+                                        <td data-label="Fecha" class="">
+                                            {{ date_format(date_create($cuota->fecha), 'd M Y') }}</td>
+                                        <td data-label="Balance">
+                                            <div class="flex items-center justify-end lg:justify-center space-x-2">
+                                                ${{number_format($cuota->saldo, 2) }}
+                                            </div>
+                                        </td>
+                                        <td data-label="Capital"
+                                            class="md:flex md:flex-col  md:justify-center md:items-center md:text-left">
+                                            <div class="md:flex md:items-center md:space-x-2  ">
+                                                <span
+                                                    class="w-36 whitespace-nowrap overflow-ellipsis overflow-hidden">${{ number_format($cuota->capital,2) }}</span>
+                                            </div>
+                                        </td>
+                                        <td data-label="Interés">${{ number_format($cuota->interes, 2) }}</td>
+                                        <td class="font-bold" data-label="Total">${{ number_format($cuota->deber, 2) }}</td>
+                                        
+                                    </tr>
                                 @endforeach
-                                <tr>
-                                    <td colspan="7" class="p-2">{{ $cuotas->links() }}</td>
-                                </tr>
+
 
                             </tbody>
                         </table>
+                       
                     </div>
-
+                    <div class="m-3 bg-white py-3 px-6 -mt-4">
+                        {{$cuotas->links()}}
+                    </div>
                 </div>
 
             </x-slot>
