@@ -39,17 +39,37 @@ class Negocio extends Model
         return $this->hasMany(Deuda::class);
     }
 
+    public function notarios()
+    {
+        return $this->hasMany(Notario::class);
+    }
+
     public function photo()
     {
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=ffffff&background=000000&rounded=true&bold=true';
     }
     public function getTrialAttribute()
     {
+        return false;
         $today=new DateTime(now());
         $date=$this->created_at;
         if ($today->diff($date)->days<15) {
             return true;
         }
         return false;
+    }
+    public function plan()
+    {
+        return $this->belongsToMany(Plan::class);
+    }
+    public function getStatusAttribute()
+    {
+        if ($this->plan()->where('status','=','activo')->count()) {
+            return 'activo';
+        }
+        if ($this->plan()->where('status','=','pendiente')->count()) {
+            return 'pendiente';
+        }
+        return "inactivo";
     }
 }

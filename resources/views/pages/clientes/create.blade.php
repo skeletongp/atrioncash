@@ -7,9 +7,9 @@
                 {{ $error }}
             </x-alert>
         @endif
-        <div class="w-full ">
+        <div class="w-full max-w-md">
             <div class=" border shadow-xl w-full p-4 block bg-white  mx-auto md:space-y-4">
-                <form action="{{ route('clientes.store') }}" method="POST" id="form"
+                <form action="{{ route('clientes.store') }}" method="POST" id="addForm"
                     class="lg:flex items-start lg:space-x-3">
                     @csrf
                     <div class="w-full">
@@ -17,7 +17,7 @@
                         </h1>
                         <input type="hidden" name="negocio_id" value="{{ Auth::user()->negocio->id }}">
                         <div class=" border-b px-3 shadow-sm py-2 md:py-4 ">
-                            <x-input class="w-full" type="text" name="name" required>
+                            <x-input class="w-full" type="text" name="name" required value="{{old('name')}}">
                                 <x-slot name="label">
                                     Nombre
                                 </x-slot>
@@ -25,9 +25,10 @@
                                     <span class="fas fa-user"></span>
                                 </x-slot>
                             </x-input>
+                            <x-input-error for="name"></x-input-error>
                         </div>
                         <div class=" border-b px-3 shadow-sm py-2 md:py-4 ">
-                            <x-input class="w-full" type="text" name="lastname" required>
+                            <x-input class="w-full" type="text" name="lastname" required value="{{old('lastname')}}">
                                 <x-slot name="label">
                                     Apellido
                                 </x-slot>
@@ -35,9 +36,21 @@
                                     <span class="fas fa-user"></span>
                                 </x-slot>
                             </x-input>
+                            <x-input-error for="lastname"></x-input-error>
                         </div>
                         <div class=" border-b px-3 shadow-sm py-2 md:py-4 ">
-                            <x-input class="w-full" type="tel" name="phone" required>
+                            <x-input class="w-full" type="text" name="cedula" placeholder="No. Cédula con guiones"  pattern="[0-9]{3}-[0-9]{7}-[0-9]{1}" required value="{{old('cedula')}}">
+                                <x-slot name="label">
+                                    Cédula
+                                </x-slot>
+                                <x-slot name="icon">
+                                    <span class="fas fa-id-card"></span>
+                                </x-slot>
+                            </x-input>
+                            <x-input-error for="cedula"></x-input-error>
+                        </div>
+                        <div class=" border-b px-3 shadow-sm py-2 md:py-4 ">
+                            <x-input class="w-full" type="tel" name="phone" required value="{{old('phone')}}">
                                 <x-slot name="label">
                                     Teléfono
                                 </x-slot>
@@ -45,9 +58,10 @@
                                     <span class="fas fa-phone"></span>
                                 </x-slot>
                             </x-input>
+                            <x-input-error for="phone"></x-input-error>
                         </div>
                         <div class=" border-b px-3 shadow-sm py-2 md:py-4 ">
-                            <x-input class="w-full" type="email" name="email" required>
+                            <x-input class="w-full" type="email" name="email" required value="{{old('email')}}">
                                 <x-slot name="label">
                                     <span class="font-bold uppercase  ">Correo</span>
                                 </x-slot>
@@ -55,71 +69,14 @@
                                     <span class="fas fa-at"></span>
                                 </x-slot>
                             </x-input>
-                        </div>
-                    </div>
-                    <hr class="lg:hidden">
-                    <div class="w-full">
-                        <h1 class="my-2 text-lg lg:text-xl uppercase font-bold text-center">Datos del préstamo</h1>
-                        <div class="border-b px-3 shadow-sm py-2 md:py-4 md:flex space-y-2 md:pb-3 md:space-y-0 md:space-x-2 ">
-                            <x-input class="w-full " type="date" name="fecha" value="{{ date('Y-m-d') }}" required>
-                                <x-slot name="label">
-                                    Fecha
-                                </x-slot>
-
-                            </x-input>
-                            <x-select wLabel="w-24 md:w-12" required name="type" id="type">
-                                <x-slot name="label">Tipo</x-slot>
-                                <option value="cuota">Por Cuotas</option>
-                                <option value="redito">A Rédito</option>
-                            </x-select>
-                        </div>
-
-                        <div class=" border-b px-3 shadow-sm py-2 md:py-4 md:flex space-y-2 md:space-y-0 md:space-x-2">
-                            <x-select class="w-full" name="periodicidad" required>
-                                <x-slot name="label">
-                                    Tiempo
-                                </x-slot>
-                                <option value="diario">Diario</option>
-                                <option value="semanal">Semanal</option>
-                                <option value="quincenal">Quincenal</option>
-                                <option value="mensual">Mensual</option>
-                                <x-slot name="icon">
-                                    <span class="fas fa-calendar-alt "></span>
-                                </x-slot>
-                            </x-select>
-                            <x-input class="w-full" type="number" id="cuotas" name="cuotas" placeholder="Cant."
-                                required min="1">
-                                <x-slot name="label">
-                                    Cuotas
-                                </x-slot>
-                                <x-slot name="icon">
-                                    <span class="fab fa-slack-hash"></span>
-                                </x-slot>
-                            </x-input>
-                        </div>
-                        <div class=" border-b px-3 shadow-sm py-2 md:py-4 md:flex space-y-2  md:space-y-0 md:space-x-2">
-                            <x-input class="w-full" type="number" name="deuda" required min="100" step="100">
-                                <x-slot name="label">
-                                    Deuda
-                                </x-slot>
-                                <x-slot name="icon">
-                                    <span class="fas fa-dollar-sign "></span>
-                                </x-slot>
-                            </x-input>
-                            <x-input class="w-full" type="number" name="interes" required step="0.25" min="1">
-                                <x-slot name="label">
-                                    Interés
-                                </x-slot>
-                                <x-slot name="icon">
-                                    <span class="fas fa-percent"></span>
-                                </x-slot>
-                            </x-input>
+                            <x-input-error for="email"></x-input-error>
                         </div>
                         <div class="flex justify-end">
-                            <x-button form="form" class="bg-one ml-auto text-white my-2">
+                            <x-button form="addForm" class="bg-one ml-auto confirm text-white my-2"  data-label="¿Registrar nuevo cliente?">
                                 Guardar
                             </x-button>
                         </div>
+                    </div>
                     </div>
 
                 </form>
@@ -129,17 +86,5 @@
             </div>
         </div>
     </div>
-    <script>
-        $('document').ready(function() {
-            $('#type').on('change', function() {
-                val = $(this).val();
-                if (val == 'redito') {
-                    $('#cuotas').prop('readonly', true);
-                    $('#cuotas').val(1);
-                } else {
-                    $('#cuotas').prop('readonly', false);
-                }
-            });
-        });
-    </script>
+    
 @endsection

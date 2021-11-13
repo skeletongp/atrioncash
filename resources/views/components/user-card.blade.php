@@ -1,8 +1,8 @@
 @props(['url' => '', 'title', 'subtitle', 'edit', 'delete', 'bg', 'userId', 'isUser'=>false, 'show'=>''])
 <div
-    class="card transition select-none bg-white h-56 -py-8 w-72  m-auto top-0 bottom-0 shadow-2xl transform hover:scale-105 overflow-hidden">
+    class="card transition select-none bg-white h-56 -py-8 w-72  m-auto top-0 bottom-0 shadow-2xl transform hover:scale-105 overflow-hidden rounded-xl">
     <h2 class="transition flex flex-col space-y-0 font-bold text-blue-500 mt-28 dto-num">
-        <span class="w-72 mx-auto overflow-ellipsis overflow-hidden"> {{ $title }}</span>
+        <span class="w-72 px-3 mx-auto overflow-ellipsis overflow-hidden whitespace-nowrap"> {{ $title }}</span>
         <small class="font-normal text-base">{{ $subtitle }}</small>
     </h2>
   <div class="cta-container transition text-center items-center flex space-x-2 mt-72 inset-x-1/4 absolute z-50 w-max">

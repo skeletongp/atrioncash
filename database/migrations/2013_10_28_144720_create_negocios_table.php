@@ -15,7 +15,6 @@ class CreateNegociosTable extends Migration
             $table->string('address');
             $table->string('phone');
             $table->foreignId('balance_id')->constrained();
-            $table->enum('status',['activo','pendiente','inactivo']);
             $table->softDeletes();
             $table->timestamps();
         });

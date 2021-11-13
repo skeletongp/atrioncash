@@ -28,6 +28,15 @@
                                     <x-input-error for="lastname"></x-input-error>
                                 </div>
                             </div>
+                            <div class=" ">
+                                <x-label for="lastname">Cédula</x-label>
+                                <x-input class="w-full" type="text" name="cedula" placeholder="No. Cédula con guiones"  pattern="[0-9]{3}-[0-9]{7}-[0-9]{1}" required>
+                                   
+                                    <x-slot name="icon">
+                                        <span class="fas fa-id-card"></span>
+                                    </x-slot>
+                                </x-input>
+                            </div>
                             <div>
                                 <x-label for="email">Correo Electrónico</x-label>
                                 <x-input placeholder="Correo Electrónico" type="email" for="email" name="email" id="email"
@@ -89,6 +98,7 @@
                                     </x-input>
                                     <x-input-error for="address"></x-input-error>
                                 </div>
+                               
                                 <div class="lg:w-1/2">
                                     <x-label for="balance">Balance</x-label>
                                     <x-input placeholder="Balance Inicial del Negocio" type="text" for="balance" name="balance" id="balance"
@@ -100,7 +110,7 @@
                                 
                             <div class="flex justify-end items-center">
                                
-                                <x-button class="bg-gray-900 text-white " form="fRegister" data-label="¿Confirmar registro?">
+                                <x-button class="bg-one text-white " form="fRegister" data-label="¿Confirmar registro?">
                                     Registrar
                                 </x-button>
                             </div>

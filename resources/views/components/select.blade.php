@@ -1,7 +1,7 @@
 @props(['disabled' => false, 'class' => '', 'wLabel'=>'w-24'])
 
 
-<div class=" py-0 flex justify-between items-center overflow-hidden rounded-md border relative w-full  {{ $class }}">
+<div class=" py-0 flex justify-between items-center overflow-hidden rounded-md border border-blue-200 relative w-full  {{ $class }}">
     <div class="mx-1 left-2 w-max cursor-default select-none text-two">
         @if (isset($label))
         <div class="border-r-2 pr-2 {{$wLabel}}">

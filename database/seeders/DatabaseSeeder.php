@@ -30,7 +30,6 @@ class DatabaseSeeder extends Seeder
             'name'=>'Préstamos La Solución',
             'address'=>'Calle Los Frailes 22, SDO',
             'phone'=>'849-315-3337',
-            'status'=>'pendiente',
             'balance_id'=>$balance->id
         ]);
         $user=User::create([
@@ -38,6 +37,7 @@ class DatabaseSeeder extends Seeder
             'lastname'=>'Contreras',
             'email'=>'cash@atriontech.com',
             'phone'=>'8493153337',
+            'cedula'=>'024-0184312-2',
             'username'=>'atrioncash',
             'password'=>bcrypt(env('OWNER_PASSWORD')),
             'rolename'=>'Administrador',

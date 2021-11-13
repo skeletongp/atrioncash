@@ -3,89 +3,110 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
-use Illuminate\Http\Request;
 use App\Http\Methods\Metodos;
-use App\Models\Cuota;
-use App\Models\Deuda;
+use App\Http\Requests\ClienteRequest;
 use Illuminate\Support\Facades\Auth;
 
 class ClienteController extends Controller
 {
-
+    public $met;
+    public function __construct() {
+        $this->met=new Metodos();
+    }
     public function index()
     {
-        $status = "Activos";
-        $negocio = Auth::user()->negocio;
-        switch ($status) {
-            case 'Activos':
-                $clientes = $negocio->clientes()->paginate(6);
-                break;
-            case 'Atrasados':
-                $clientes = $negocio->clientes()->where('status', '=', 'atrasado')->paginate(6);
-                break;
-            case 'Historial':
-                $clientes = $negocio->clientes()->whithTrashed()->paginate(6);
-                break;
-        }
+        $query=Auth::user()->negocio->clientes();
+        $clientes = $this->met->queryFiltrado(null, $query );
+
         return view('pages.clientes.index')
             ->with([
-                'status' => $status,
                 'clientes' => $clientes,
             ]);
     }
 
+    /* Vistas de clientes filtrados */
+    public function activos()
+    {
+        $status = "Activos";
+        $query=Auth::user()->negocio->clientes();
+        $clientes = $this->met->queryFiltrado($status, $query);
+        return view('pages.clientes.index')
+            ->with([
+                'clientes' => $clientes,
+            ]);
+    }
+    public function atrasados()
+    {
+        $status = "Atrasados";
+        $query=Auth::user()->negocio->clientes();
+        $clientes = $this->met->queryFiltrado($status, $query);
+        return view('pages.clientes.index')
+            ->with([
+                'clientes' => $clientes,
+            ]);
+    }
+    public function historial()
+    {
+        $status = "Historial";
+        $query=Auth::user()->negocio->clientes();
+        $clientes = $this->met->queryFiltrado($status, $query);
+        return view('pages.clientes.index')
+            ->with([
+                'clientes' => $clientes,
+            ]);
+    }
+    /* Fin de las vistas filtradas */
 
     public function create()
     {
         return view('pages.clientes.create');
     }
 
-
-    public function store(Request $request)
+    public function store(ClienteRequest $request)
     {
+        request()->request->remove('trial');
         $data = $request->all();
         $data['status'] = 'al día';
         $data['phone'] = str_replace('-', '', $data['phone']);
         $negocio = Auth::user()->negocio;
-        if ($negocio->balance->saldo_actual >= $data['deuda']) {
-            $clienteData = array_diff($data, [$data['interes'], $data['cuotas'], $data['periodicidad'], $data['fecha'], $data['type']]);
-            $clienteData['negocio_id']=$negocio->id;
-            $cliente = Cliente::create($clienteData);
-            $method = new Metodos();
-            $method->crearDeuda($data, $cliente->id);
-            return redirect()->route('clientes.index');
-        } else {
-            return redirect()->back()->with([
-                'error'=>'No tiene saldo suficiente para prestar'
-            ]);
-        }
+        $data['negocio_id'] = $negocio->id;
+        Cliente::create($data);
+        return redirect()->route('clientes.index');
     }
 
+    public $cliente_id;
 
-
-
+  
     public function show(Cliente $cliente)
     {
         return view('pages.clientes.show')
-        ->with([
-            'cliente'=>$cliente
-        ]);
+            ->with([
+                'cliente' => $cliente
+            ]);
     }
-
     public function edit(Cliente $cliente)
     {
-        //
+        return view('pages.clientes.edit')
+            ->with([
+                'cliente' => $cliente
+            ]);
     }
 
-
-    public function update(Request $request, Cliente $cliente)
+    public function update(ClienteRequest $request, Cliente $cliente)
     {
-        //
+        request()->request->remove('trial');
+     
+        $data = $request->all();
+        unset($data['cliente_id']);
+        $data['phone'] = str_replace('-', '', $data['phone']);
+        $cliente->update($data);
+        return redirect()->route('clientes.show', $cliente);
     }
 
 
     public function destroy(Cliente $cliente)
     {
-        //
+        $cliente->delete();
+        return redirect()->route('clientes.index');
     }
 }

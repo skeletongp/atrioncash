@@ -16,8 +16,16 @@ class Suscribed
      */
     public function handle(Request $request, Closure $next)
     {
-      
-    
+        $user = $request->user();
+        if ($user->negocio->trial) {
+            request()->request->add(['trial' => 'Período de prueba']);
+            return $next($request);
+        }
+
+        if ($user->negocio->status=='inactivo' && $user->hasRole('admin')==false) {
+           return redirect()->route('plans.index');
+        }
+
         return $next($request);
     }
 }

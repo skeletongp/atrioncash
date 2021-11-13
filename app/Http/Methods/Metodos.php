@@ -2,10 +2,14 @@
 
 namespace App\Http\Methods;
 
+use App\Models\Cliente;
 use App\Models\Cuota;
 use App\Models\Deuda;
 use App\Models\Partida;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 
 class Metodos
@@ -44,10 +48,10 @@ class Metodos
 
     public function crearDeuda($data, $cliente_id)
     {
-        if ($data['type']=='redito') {
-            $data['cuotas']=1;
+        if ($data['type'] == 'redito') {
+            $data['cuotas'] = 1;
         }
-       $deuda= Deuda::create(
+        $deuda = Deuda::create(
             [
                 'saldo_inicial' => $data['deuda'],
                 'saldo_actual' => $data['deuda'],
@@ -60,66 +64,99 @@ class Metodos
             ]
         );
         $amortizacion = $this->amortizar($data['deuda'], $data['interes'], $data['cuotas']);
-        $this->crearCuotas($amortizacion, $data, $deuda->id);
+        $this->ajustarDeudaCliente($cliente_id, $data['deuda']);
+        $this->crearCuotas($amortizacion, $data, $deuda->id, $cliente_id);
         $this->restarCapital($deuda->saldo_inicial);
         $this->agregarPartida(0, $deuda->saldo_inicial, $cliente_id);
-        return redirect()->route('clientes.index');
+        return $deuda;
     }
 
+    public function ajustarDeudaCliente($cliente_id, $monto, $tipo = "suma")
+    {
+        $cliente = Cliente::find($cliente_id);
+        if ($tipo == 'suma') {
+            $cliente->deuda = $cliente->deuda + $monto;
+        } else {
+            $cliente->deuda = $cliente->deuda - $monto;
+        }
+        $cliente->save();
+    }
     public function restarCapital($deuda)
     {
-        $balance=Auth::user()->negocio->balance;
-        $balance->saldo_actual=$balance->saldo_actual-$deuda;
-        $balance->capital_prestado=$balance->capital_prestado+$deuda;
+        $balance = Auth::user()->negocio->balance;
+        $balance->saldo_actual = $balance->saldo_actual - $deuda;
+        $balance->capital_prestado = $balance->capital_prestado + $deuda;
         $balance->save();
     }
-    public function agregarPartida($entrada=0, $salida=0,$cliente_id )
+    public function agregarPartida($entrada = 0, $salida = 0, $cliente_id)
     {
-        $user=Auth::user();
+        $user = Auth::user();
         Partida::create([
-            'entrada'=>$entrada,
-            'salida'=>$salida,
-            'fecha'=>date('Y-m-d'),
-            'cliente_id'=>$cliente_id,
-            'user_id'=>$user->id,
-            'negocio_id'=>$user->negocio_id,
+            'entrada' => $entrada,
+            'salida' => $salida,
+            'fecha' => date('Y-m-d'),
+            'cliente_id' => $cliente_id,
+            'user_id' => $user->id,
+            'negocio_id' => $user->negocio_id,
         ]);
     }
-    public function crearCuotas($amortizacion,$data, $deuda_id)
+    public function crearCuotas($amortizacion, $data, $deuda_id, $cliente_id)
     {
         $fecha = Carbon::createFromDate($data['fecha']);
+        $met = new Metodos2();
         foreach ($amortizacion->pagos as $pago) {
-            switch ($data['periodicidad']) {
-                case 'diario':
-                    $fecha->addDay();
-                    $fecha_db = $fecha->toDateString();
-                    break;
-                case 'semanal':
-                    $fecha->addWeek();
-                    $fecha_db = $fecha->toDateString();
-                    break;
-                case 'quincenal':
-                    $fecha->addDays(15);
-                    $fecha_db = $fecha->toDateString();
-                    break;
-                case 'mensual':
-                    $fecha->addMonth();
-                    $fecha_db = $fecha->toDateString();
-                    break;
-           
-            }
+            $fecha_db = $met->sumarfecha($fecha, $data['periodicidad']);
             Cuota::create([
                 'saldo' => $pago->saldo,
                 'status' => 'pendiente',
-                'fecha'=>$fecha_db,
+                'fecha' => $fecha_db,
                 'capital' => $pago->capital,
                 'restante' => $pago->restante,
                 'deber' => $pago->deber,
                 'deuda_id' => $deuda_id,
                 'negocio_id' => $data['negocio_id'],
+                'cliente_id' => $cliente_id,
                 'interes' => $pago->interes,
-
             ]);
+            $fecha = $fecha_db;
         }
+    }
+    public function queryFiltrado($status = null, HasMany $query)
+    {
+        $campoDeuda="deuda";
+        if ($query->getQualifiedForeignKeyName()=='deudas.negocio_id') {
+            $campoDeuda="saldo_actual";
+        }
+        switch ($status) {
+            case 'Activos':
+                $query = $query->search(request('s'))->where($campoDeuda, '>', 50)->orderBY('id')->get();
+                $query = $query->filter(function ($query) {
+                    return $query->estado == 'al día';
+                });
+                break;
+            case 'Atrasados':
+                $query = $query->search(request('s'))->where($campoDeuda, '>', 50)->orderBY('id')->get();
+                $query = $query->filter(function ($query) {
+                    return $query->estado == 'atrasado';
+                });
+                break;
+            case 'Historial':
+                $query = $query->has('cuotas')->search(request('s'))->where($campoDeuda, '<=', 50)->orderBY('id')->get();
+                break;
+            default:
+                $query = $query->search(request('s'))->orderBY('id')->get();
+                break;
+        }
+        $page = Paginator::resolveCurrentPage() ?: 1;
+        $perPage = 6;
+        $query = new LengthAwarePaginator(
+            $query->forPage($page, $perPage),
+            $query->count(),
+            $perPage,
+            $page,
+            ['path' => Paginator::resolveCurrentPath()]
+        );
+
+        return $query;
     }
 }

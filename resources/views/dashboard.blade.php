@@ -7,17 +7,17 @@
         <x-dropdown-link id="btn-menu" class=" cursor-pointer bg-one text-white hover:bg-black menu-btn lg:hidden z-50">
             <span class="fas fa-bars text-2xl" id="span-menu"></span>
         </x-dropdown-link>
-        <span class="uppercase text-2xl text-one font-bold hidden md:flex">
-            @if (Auth::user()->negocio)
+        <div class="text-center leading-3 pb-2 flex flex-col max-w-sm">
+            <x-dropdown-link href="{{route('home')}}"
+                class="uppercase text-lg md:text-2xl text-one font-bold overflow-ellipsis hover:bg-white hover:bg-opacity-20 rounded-xl  overflow-hidden whitespace-nowrap">
                 {{ Auth::user()->negocio->name }}
-            @else
-                Administrador
-            @endif
-        </span>
+            </x-dropdown-link>
+            <small
+                class="text-white overflow-ellipsis overflow-hidden whitespace-nowrap">{{ request()->has('trial') ? request('trial') : '' }}</small>
+        </div>
         <x-dropdown align="right">
             <x-slot name="trigger">
                 <div class="flex items-center space-x-2 cursor-pointer">
-
                     <div class="h-9 w-9 shadow-xl  rounded-full bg-center bg-contain bg-no-repeat"
                         style="background-image: url({{ Auth::user()->photo() }})">
                     </div>
@@ -30,7 +30,7 @@
                 </x-dropdown-link>
             </x-slot>
         </x-dropdown>
-       
+
     </header>
     <x-menu></x-menu>
     <div class=" ">
@@ -41,21 +41,18 @@
 
         @else
             <div class="w-screen h-screen max-w-7xl max-h-screen mx-auto md:p-4 pt-12 md:pt-16 pb-32 md:pb-4  bg-white ">
-                <h1 class="font-bold uppercase text-xl md:text-xl lg:text-4xl text-center my-2 lg:my-10" id="hTitle">Bienvenido, {{ Auth::user()->fullname }}</h1>
-                <div class="grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto py-12 gap-6 bg-three p-3 text-center w-full">
-
-                    <x-grid-stat title="{{ $title1 }}" subtitle="{{ $subtitle1 }}" actionText="Balance General"
-                        actionLink="{{ $url1 }}" icon="{{ $icon1 }}" />
-
-                    <x-grid-stat title="{{ $title2 }}" subtitle="{{ $subtitle2 }}" actionText="Ver Préstamos"
-                        actionLink="{{ $url2 }}" icon="{{ $icon2 }}" />
-
-
-                    <x-grid-stat title="{{ $title3 }}" subtitle="{{ $subtitle3 }}" actionText="Ver Clientes"
-                        actionLink="{{ $url3 }}" icon="{{ $icon3 }}" />
-
-                    <x-grid-stat title="{{ $title4 }}" subtitle="{{ $subtitle4 }}" actionText="Gestionar Cobros"
-                        actionLink="{{ $url4 }}" icon="{{ $icon4 }}" />
+                <h1 class="font-bold uppercase text-xl md:text-xl lg:text-4xl text-center my-2 lg:my-10" >Bienvenido,
+                    {{ Auth::user()->fullname }}</h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto py-12 gap-6 bg-three rounded-xl p-3 text-center w-full">
+                    <x-grid-stat title="{{ '$' . number_format($balance->saldo_actual, 2) }}" subtitle="Dinero en Saldo"
+                        actionText="Balance General" actionLink="" icon="fa-dollar-sign" />
+                    <x-grid-stat title="{{ '$' . number_format($balance->capital_prestado, 2) }}" subtitle="Capital Prestado"
+                        actionText="Ver Préstamos" actionLink="{{ route('deudas.index') }}" icon="fas fa-file-invoice-dollar" />
+                    <x-grid-stat title="{{ $clientes->count('id') }}" subtitle="Clientes Activos" actionText="Ver Clientes"
+                        actionLink="{{ route('clientes.activos') }}" icon="fa-users" />
+                    <x-grid-stat title="{{ $pendientes->count('id') }}" subtitle="Cobros pendientes"
+                        actionText="Gestionar Cobros" actionLink="{{ route('deudas.atrasados') }}"
+                        icon="fas fa-hand-holding-usd" />
 
 
                 </div>

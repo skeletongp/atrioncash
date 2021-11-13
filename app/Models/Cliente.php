@@ -5,15 +5,37 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Cliente extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, SearchableTrait;
+   
+    protected $searchable = [
+        /**
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'clientes.name' => 10,
+            'clientes.lastname' => 10,
+            'clientes.email' => 2,
+            'clientes.cedula' => 5,
+            
+        ]
+    ];
 
+    public function posts()
+    {
+        return $this->hasMany('Post');
+    }
     protected $guarded = [];
     public function fullname()
     {
-        return strtok($this->name, " ")  . ' ' .  strtok($this->lastname, " ");
+        return $this->name  . ' ' .  $this->lastname;
     }
 
     public function photo()
@@ -21,8 +43,25 @@ class Cliente extends Model
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->fullname()) . '&color=000000&background=EEEEEE&rounded=true&bold=true';
     }
 
+    public function contratos()
+    {
+        return $this->hasMany(Contrato::class);
+    }
+
     public function deudas()
     {
         return $this->hasMany(Deuda::class);
     }
+    public function cuotas()
+    {
+        return $this->hasMany(Cuota::class);
+    }
+    public function getEstadoAttribute()
+    {
+      if ($this->cuotas()->where('status','pendiente')->where('fecha','<', date(now()))->count()) {
+        return $this->status='atrasado';
+      }
+       return 'al día';
+    }
+   
 }
