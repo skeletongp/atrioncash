@@ -101,6 +101,15 @@
 
                         </x-dropdown-link>
                     </x-menu-item>
+                    <x-menu-item title="Ayuda" icon="fa-user-tie" key="btn-ayuda" routes="notarios.*">
+                        <x-dropdown-link href="{{ route('notarios.create') }}"
+                            :active="request()->routeIs('notarios.create')">
+                            Crear</x-dropdown-link>
+                        <x-dropdown-link href="{{ route('notarios.index') }}"
+                            :active="request()->routeIs('notarios.index')">Ver
+
+                        </x-dropdown-link>
+                    </x-menu-item>
                 @endrole
 
                 {{-- Soporte --}}

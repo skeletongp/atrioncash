@@ -77,13 +77,9 @@
     <script>
         var channel = Echo.private("cobros.{{ Auth::user()->negocio_id }}");
         channel.listen("Cobros", function(data) {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: data.user.name+' '+data.user.lastname+' ha realizado un cobro',
-                showConfirmButton: false,
-                timer: 4000
-            })
+            message=data.user.name + ' ' + data.user.lastname + ' ha realizado un cobro';
+            notifyMe(message)
         });
+
     </script>
 @endsection
