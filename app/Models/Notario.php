@@ -9,7 +9,7 @@ class Notario extends Model
 {
     use HasFactory;
     protected $guarded=[];
-
+    public $incrementing = false; protected $keyType = 'string';
     public function municipio()
     {
         return $this->belongsTo(Municipio::class);

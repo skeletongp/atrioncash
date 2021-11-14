@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Ramsey\Uuid\Uuid;
 class CreateContratosTable extends Migration
 {
     /**
@@ -14,13 +14,13 @@ class CreateContratosTable extends Migration
     public function up()
     {
         Schema::create('contratos', function (Blueprint $table) {
-            $table->id();
+             $table->uuid('id')->primary();
             $table->text('parrafo')->nullable();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('cliente_id')->constrained();
-            $table->foreignId('deuda_id')->constrained();
-            $table->foreignId('notario_id')->constrained();
-            $table->foreignId('negocio_id')->constrained();
+            $table->foreignUuid('user_id')->constrained();
+            $table->foreignUuid('cliente_id')->constrained();
+            $table->foreignUuid('deuda_id')->constrained();
+            $table->foreignUuid('notario_id')->constrained();
+            $table->foreignUuid('negocio_id')->constrained();
             $table->timestamps();
         });
     }

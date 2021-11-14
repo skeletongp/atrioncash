@@ -21,14 +21,14 @@
             </x-dropdown>
         </div>
         <div class="my-3 mb-8">
-            <x-user-card :title="$cliente->fullname()" :subtitle="'$'.number_format($cliente->deuda,2)"
+            <x-user-card :title="$cliente->fullname()" :data="$cliente->phone" :subtitle="'Deuda: $'.number_format($cliente->deuda,2)"
                 :edit="route('clientes.edit', $cliente)" :delete="route('clientes.destroy', $cliente)"
                 :userId="$cliente->id" :bg="$cliente->photo()" :show="''">
 
             </x-user-card>
-            <h1 class="mt-8 mb-2 text-center font-bold text-lg uppercase ">Préstamos de {{ $cliente->fullname() }}</h1>
         </div>
         @if ($cliente->deudas()->count())
+        <h1 class="mt-8 mb-2 text-center font-bold text-lg uppercase ">Préstamos de {{ $cliente->fullname() }}</h1>
             <div
                 class=" grid grid-cols-1 {{ $cliente->deudas()->count() > 1 ? 'md:grid-cols-2' : 'max-w-sm mx-auto' }}  px-3 pb-6 gap-6">
                 @foreach ($cliente->deudas as $deuda)

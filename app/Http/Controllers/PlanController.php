@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Methods\Metodos2;
 use App\Models\Plan;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Auth;
 
 class PlanController extends Controller
@@ -41,7 +41,7 @@ class PlanController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->rules);
-        request()->request->remove('trial');
+        request()->request->add(['id'=>Uuid::uuid1()]);
         Plan::create($request->all());
         return redirect()->route('plans.index');
     }

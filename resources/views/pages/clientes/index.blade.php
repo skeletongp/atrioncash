@@ -2,7 +2,7 @@
 
 @section('body')
     <div class=" max-w-5xl mx-auto">
-        <div class="  pb-32 md:pb-2 md:mt-16 relative ">
+        <div class="  pb-16 md:pb-2 md:mt-16 relative ">
             <a href="{{ route('clientes.create') }}"
                 class="w-10 h-10 rounded-full bg-one flex items-center justify-center hover:bg-blue-400 absolute top-0 left-1 text-white hover:text-blue-800 transform hover:scale-105 shadow-xl">
                 <span class="fas fa-plus "> </span>
@@ -26,7 +26,7 @@
             @if ($clientes->count())
                 <div class=" grid grid-cols-1 {{$clientes->count()==1?'mx-auto ':($clientes->count()==2?'md:grid-cols-2':'md:grid-cols-3')}} p-4 gap-6 my-4 bg-three lg:p-8 ">
                     @foreach ($clientes as $cliente)
-                        <x-user-card :title="$cliente->name.' '.$cliente->lastname" :subtitle="'$'.number_format($cliente->deuda,2)"
+                        <x-user-card :title="$cliente->name.' '.$cliente->lastname" :data="$cliente->phone" :subtitle="'Deuda: $'.number_format($cliente->deuda,2)"
                             :edit="route('clientes.edit', $cliente)" :delete="route('clientes.destroy', $cliente)"
                             :userId="$cliente->id" :bg="$cliente->photo()" :show="route('clientes.show', $cliente)">
 

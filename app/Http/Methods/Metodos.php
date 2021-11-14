@@ -6,11 +6,13 @@ use App\Models\Cliente;
 use App\Models\Cuota;
 use App\Models\Deuda;
 use App\Models\Partida;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Ramsey\Uuid\Uuid;
 
 class Metodos
 {
@@ -53,6 +55,7 @@ class Metodos
         }
         $deuda = Deuda::create(
             [
+                'id'=>Uuid::uuid1(),
                 'saldo_inicial' => $data['deuda'],
                 'saldo_actual' => $data['deuda'],
                 'interes' => $data['interes'],
@@ -81,6 +84,16 @@ class Metodos
         }
         $cliente->save();
     }
+    public function ajustarSaldoUsuario($user_id, $monto, $tipo = "suma")
+    {
+        $user = User::find($user_id);
+        if ($tipo == 'suma') {
+            $user->saldo = $user->saldo + $monto;
+        } else {
+            $user->saldo = $user->saldo - $monto;
+        }
+        $user->save();
+    }
     public function restarCapital($deuda)
     {
         $balance = Auth::user()->negocio->balance;
@@ -92,6 +105,7 @@ class Metodos
     {
         $user = Auth::user();
         Partida::create([
+            'id'=>Uuid::uuid1(),
             'entrada' => $entrada,
             'salida' => $salida,
             'fecha' => date('Y-m-d'),
@@ -107,6 +121,7 @@ class Metodos
         foreach ($amortizacion->pagos as $pago) {
             $fecha_db = $met->sumarfecha($fecha, $data['periodicidad']);
             Cuota::create([
+                'id'=>Uuid::uuid1(),
                 'saldo' => $pago->saldo,
                 'status' => 'pendiente',
                 'fecha' => $fecha_db,

@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Garantia extends Model
 {
     use HasFactory;
+    public $incrementing = false; protected $keyType = 'string';
 }

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<meta http-equiv="refresh" content="{{ config('session.lifetime') * 60 }}">
 @section('content')
     <div class="h-screen font-sans  bg-cover bg-center" >
         <div class="container mx-auto h-full flex flex-1 justify-center items-center">

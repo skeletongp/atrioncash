@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Ramsey\Uuid\Uuid;
 class CreateGastosTable extends Migration
 {
     /**
@@ -14,12 +14,12 @@ class CreateGastosTable extends Migration
     public function up()
     {
         Schema::create('gastos', function (Blueprint $table) {
-            $table->id();
+             $table->uuid('id')->primary();
             $table->decimal('monto');
             $table->string('concepto');
             $table->date('fecha');
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('negocio_id')->constrained();
+            $table->foreignUuid('user_id')->constrained();
+            $table->foreignUuid('negocio_id')->constrained();
             $table->softDeletes();
             $table->timestamps();
         });

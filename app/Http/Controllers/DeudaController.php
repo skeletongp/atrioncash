@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Methods\Metodos;
 use App\Http\Methods\Metodos2;
 use App\Models\Deuda;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Auth;
 
 class DeudaController extends Controller
@@ -15,6 +15,7 @@ class DeudaController extends Controller
 
     public function __construct() {
        $this->met=new Metodos();
+       $this->middleware('role:owner')->except('index','activos','historial','atrasados','show');
     }
     
     public function index()
@@ -77,6 +78,7 @@ class DeudaController extends Controller
        $data=$request->all();
        $cliente_id=$data['cliente_id'];
        $data['negocio_id']=Auth::user()->negocio_id;
+       $data['id']=Uuid::uuid1();
        $metodo=new Metodos();
         $deuda=$metodo->crearDeuda($data, $cliente_id);
 

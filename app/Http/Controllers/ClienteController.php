@@ -6,12 +6,14 @@ use App\Models\Cliente;
 use App\Http\Methods\Metodos;
 use App\Http\Requests\ClienteRequest;
 use Illuminate\Support\Facades\Auth;
-
+use Ramsey\Uuid\Uuid;
 class ClienteController extends Controller
 {
     public $met;
     public function __construct() {
         $this->met=new Metodos();
+        $this->middleware('role:owner')->except('index','activos','historial','atrasados','show');
+
     }
     public function index()
     {
@@ -64,9 +66,9 @@ class ClienteController extends Controller
 
     public function store(ClienteRequest $request)
     {
-        request()->request->remove('trial');
         $data = $request->all();
         $data['status'] = 'al día';
+        $data['id'] = Uuid::uuid1();
         $data['phone'] = str_replace('-', '', $data['phone']);
         $negocio = Auth::user()->negocio;
         $data['negocio_id'] = $negocio->id;
@@ -94,7 +96,6 @@ class ClienteController extends Controller
 
     public function update(ClienteRequest $request, Cliente $cliente)
     {
-        request()->request->remove('trial');
      
         $data = $request->all();
         unset($data['cliente_id']);

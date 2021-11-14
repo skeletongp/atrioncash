@@ -1,7 +1,7 @@
 @extends('dashboard')
 
 @section('body')
-    <div class="py-4 md:py-16 mt-16 pt-8 md:pt-4 px-4 bg-three relative">
+    <div class="py-4 md:py-16 pb-16 pt-8 md:pt-4 md:mt-16 px-4 bg-three relative">
         <div class="absolute top-1 left-1">
             <x-dropdown-link href="{{ route('deudas.create') }}">
                 <span class="fas fa-plus text-xl md:text-2xl"> </span>
@@ -25,7 +25,7 @@
         </div>
         @if ($deudas->count())
 
-            <h1 class="uppercase font-bold text-center text-xl md:text-2xl my-2 mb-4 md:mb-10">Listado de Préstamos</h1>
+            <h1 class="uppercase font-bold text-center text-xl md:text-2xl my-2 mt-6 mb-4 md:mb-10">Listado de Préstamos</h1>
             <div
                 class="grid grid-cols-1 {{ $deudas->count() == 1 ? 'mx-auto ' : ($deudas->count() == 2 ? 'md:grid-cols-2' : 'md:grid-cols-3') }} max-w-5xl mx-auto gap-6 bg-three p-3 text-center w-full">
                 @foreach ($deudas as $deuda)
@@ -50,8 +50,8 @@
 
 
         @else
-            <h1 class="font-bold text-center text-2xl md:text-4xl uppercase">
-                No hay p´restamos registrados
+            <h1 class="font-bold text-center text-2xl md:text-4xl mt-16 uppercase">
+                No se encontraron resultados
             </h1>
         @endif
     </div>

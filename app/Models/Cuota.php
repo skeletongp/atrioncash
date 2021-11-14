@@ -11,7 +11,7 @@ class Cuota extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded=[];
-
+    public $incrementing = false; protected $keyType = 'string';
     public function negocio()
     {
         return $this->belongsTo(Negocio::class);

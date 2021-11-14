@@ -9,4 +9,5 @@ class Plan extends Model
 {
     use HasFactory;
     protected $guarded=[];
+    public $incrementing = false; protected $keyType = 'string';
 }

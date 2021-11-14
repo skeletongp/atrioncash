@@ -10,6 +10,7 @@ class Municipio extends Model
     use HasFactory;
     protected $connection="mysql2";
     protected $guarded=[];
+    
 
     public function provincia()
     {

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Municipio;
 use App\Models\Notario;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Auth;
 
 class NotarioController extends Controller
@@ -36,6 +36,7 @@ class NotarioController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->rules);
+        request()->request->add(['id'=>Uuid::uuid1()]);
         Notario::create($request->all());
         return redirect()->route('notarios.index');
     }

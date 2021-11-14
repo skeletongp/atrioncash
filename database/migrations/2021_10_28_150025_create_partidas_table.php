@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Ramsey\Uuid\Uuid;
 class CreatePartidasTable extends Migration
 {
     /**
@@ -14,13 +14,13 @@ class CreatePartidasTable extends Migration
     public function up()
     {
         Schema::create('partidas', function (Blueprint $table) {
-            $table->id();
+             $table->uuid('id')->primary();
             $table->decimal('entrada');
             $table->decimal('salida');
             $table->date('fecha');
-            $table->foreignId('cliente_id')->constrained();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('negocio_id')->constrained();
+            $table->foreignUuid('cliente_id')->constrained();
+            $table->foreignUuid('user_id')->constrained();
+            $table->foreignUuid('negocio_id')->constrained();
             $table->softDeletes();
             $table->timestamps();
         });

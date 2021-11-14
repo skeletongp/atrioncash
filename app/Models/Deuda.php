@@ -11,7 +11,7 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 class Deuda extends Model
 {
     use HasFactory, SoftDeletes, SearchableTrait;
-   
+    public $incrementing = false; protected $keyType = 'string';
     protected $searchable = [
         /**
          * Columns and their priority in search results.

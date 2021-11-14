@@ -11,7 +11,7 @@ class Negocio extends Model
 {
     use HasFactory, SoftDeletes;
     protected $guarded=[];
-
+    public $incrementing = false; protected $keyType = 'string';
 
     public function usuarios()
     {
@@ -50,7 +50,6 @@ class Negocio extends Model
     }
     public function getTrialAttribute()
     {
-        return false;
         $today=new DateTime(now());
         $date=$this->created_at;
         if ($today->diff($date)->days<15) {
@@ -64,6 +63,7 @@ class Negocio extends Model
     }
     public function getStatusAttribute()
     {
+       
         if ($this->plan()->where('status','=','activo')->count()) {
             return 'activo';
         }

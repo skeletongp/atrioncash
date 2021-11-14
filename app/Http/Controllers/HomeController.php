@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Auth;
 use Alert;
 use App\Models\Municipio;

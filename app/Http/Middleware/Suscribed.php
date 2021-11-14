@@ -3,7 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Facades\Auth;
 
 class Suscribed
 {
@@ -16,9 +17,9 @@ class Suscribed
      */
     public function handle(Request $request, Closure $next)
     {
+       
         $user = $request->user();
         if ($user->negocio->trial) {
-            request()->request->add(['trial' => 'Período de prueba']);
             return $next($request);
         }
 

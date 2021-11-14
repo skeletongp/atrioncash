@@ -5,7 +5,7 @@
         <div class=" mx-auto  flex flex-1 justify-center items-center">
             <div class="w-full max-w-4xl mx-auto">
                     <form class="m-4 p-8 bg-white dark:bg-gray-900  shadow-xl flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-6 rounded-xl" id="fRegister"
-                        action="{{ route('user.store') }}" method="POST">
+                        action="{{ route('users.store') }}" method="POST">
                         @csrf
                         <div class="space-y-4 w-full">
                             <h1 class="font-bold uppercase md:text-lg text-center mb-4">Registro de Usuario</h1>
@@ -53,22 +53,7 @@
                                 </x-input>
                                 <x-input-error for="phone"></x-input-error>
                             </div>
-                            <div>
-                                <x-label for="password">Contraseña</x-label>
-                                <x-input placeholder="Contraseña" type="password" for="password" name="password"
-                                    id="password" value="{{ old('password', request('password')) }}">
-                                    <x-slot name="icon"> <span class="fas fa-lock"></span></x-slot>
-                                </x-input>
-                                <x-input-error for="password"></x-input-error>
-                            </div>
-                            <div>
-                                <x-label for="password_confirmation">Confirmación</x-label>
-                                <x-input placeholder="Confirme la contraseña" type="password" for="password_confirmation"
-                                    name="password_confirmation" id="password_confirmation"
-                                    value="{{ old('', request('')) }}">
-                                    <x-slot name="icon"> <span class="fas fa-lock"></span></x-slot>
-                                </x-input>
-                            </div>
+                            
                            
                         </div>
                         <div class="space-y-4 w-full">
@@ -99,9 +84,9 @@
                                     <x-input-error for="address"></x-input-error>
                                 </div>
                                
-                                <div class="lg:w-1/2">
+                                <div class="w-3/5 md:w-1/2">
                                     <x-label for="balance">Balance</x-label>
-                                    <x-input placeholder="Balance Inicial del Negocio" type="text" for="balance" name="balance" id="balance"
+                                    <x-input placeholder="Balance Inicial" type="text" for="balance" name="balance" id="balance"
                                         value="{{ old('balance', request('balance')) }}" required>
                                         <x-slot name="icon"> <span class="fas fa-dollar-sign"></span></x-slot>
                                     </x-input>

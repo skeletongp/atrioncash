@@ -65,9 +65,14 @@ Route::middleware(['auth', 'suscribed'])->group(function () {
    /* Contratos Routes */
    Route::get('contratos/{contrato}/contrato_cuota', [ContratoController::class, 'contrato_cuota'])->name('contratos.contrato_cuota');
    Route::resource('contratos', ContratoController::class)->names('contratos');
+
+ 
 });
+
 /* Plans Routes */
 Route::resource('plans', PlanController::class)->names('plans');
 Route::get('plans/{plan}/suscribe', [PlanController::class, 'suscribe'])->name('plans.suscribe');
+
 /* Users Routes */
-Route::resource('user', UserController::class)->middleware(['auth'])->names('user');
+  Route::post('users/{user}/cobrar',[UserController::class,'cobrar'])->name('users.cobrar');
+  Route::resource('users', UserController::class)->names('users');

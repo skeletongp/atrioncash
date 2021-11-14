@@ -9,7 +9,7 @@ class Contrato extends Model
 {
     use HasFactory;
     protected $guarded=[];
-
+    public $incrementing = false; protected $keyType = 'string';
     public function negocio()
     {
         return $this->belongsTo(Negocio::class);

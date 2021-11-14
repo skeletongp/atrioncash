@@ -8,5 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Balance extends Model
 {
     use HasFactory;
-    protected $guarded=[];
+    protected $guarded = [];
+    public $incrementing = false;
+    protected $keyType = 'string';
 }

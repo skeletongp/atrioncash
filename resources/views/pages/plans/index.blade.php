@@ -8,7 +8,7 @@
                     <div class="card relative bg-white shadow-2xl rounded-xl overflow-hidden mx-auto"
                         style="width: 320px; height:350px">
                         <div class="imgBx">
-                            <img src="/images/logo.png" alt="Atrioncash" class="ml-3">
+                            <img src="/images/logo.png" alt="{{env('APP_NAME', 'AtrionCash')}}" class="ml-3">
                         </div>
     
                         <div class="contentBx">

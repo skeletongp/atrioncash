@@ -5,7 +5,7 @@ use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-
+use Ramsey\Uuid\Uuid;
 class CreateNotariosTable extends Migration
 {
     /**
@@ -17,13 +17,13 @@ class CreateNotariosTable extends Migration
     {
         Schema::create('notarios', function (Blueprint $table) {
             $database = DB::connection("mysql2")->getDatabaseName();
-            $table->id();
+             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('cedula');
             $table->string('phone');
             $table->string('direccion',100);
             $table->integer('matricula');
-            $table->foreignId('negocio_id')->constrained();
+            $table->foreignUuid('negocio_id')->constrained();
             $table->enum('titulo',['LIC.','DR.']);
             $table->bigInteger('municipio_id');
             $table->foreign('municipio_id')->references('id')->on(new Expression( $database. '.municipios'));

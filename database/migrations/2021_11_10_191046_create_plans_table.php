@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Ramsey\Uuid\Uuid;
 class CreatePlansTable extends Migration
 {
     /**
@@ -14,7 +14,7 @@ class CreatePlansTable extends Migration
     public function up()
     {
         Schema::create('plans', function (Blueprint $table) {
-            $table->id();
+             $table->uuid('id')->primary();
             $table->string('name');
             $table->decimal('price');
             $table->enum('periodo',['mensual','semestral','anual']);

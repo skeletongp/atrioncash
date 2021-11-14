@@ -68,9 +68,6 @@ $("document").ready(function () {
         $("#loader").toggleClass("hidden flex");
     });
 
-    /* Atajos de tecla */
-    $(document).shortkeys({
-        'g': function () { alert('g'); }
-      });
+ 
    
 });

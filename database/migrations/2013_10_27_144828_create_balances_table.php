@@ -14,7 +14,7 @@ class CreateBalancesTable extends Migration
     public function up()
     {
         Schema::create('balances', function (Blueprint $table) {
-            $table->id();
+             $table->uuid('id')->primary();
             $table->decimal('saldo_inicial');
             $table->decimal('saldo_actual');
             $table->decimal('capital_cobrado');

@@ -11,10 +11,12 @@
             <div class="flex flex-col items-center w-full mt-4 text-white border-b-2">
                 {{-- Clientes --}}
                 <x-menu-item title="Clientes" icon="fa-users" key="btn-clientes" routes="clientes.*">
-                    <x-dropdown-link href="{{ route('clientes.create') }}"
-                        :active="request()->routeIs('clientes.create')">
-                        Añadir
-                    </x-dropdown-link>
+                    @role('owner')
+                        <x-dropdown-link href="{{ route('clientes.create') }}"
+                            :active="request()->routeIs('clientes.create')">
+                            Añadir
+                        </x-dropdown-link>
+                    @endrole
                     <x-dropdown-link href="{{ route('clientes.index') }}"
                         :active="request()->routeIs('clientes.index')">
                         Todos
@@ -34,17 +36,19 @@
                 </x-menu-item>
                 {{-- Préstamos --}}
                 <x-menu-item title="Préstamos" icon="fa-coins" key="btn-prestamos" routes="deudas.*">
-                    <x-dropdown-link href="{{ route('deudas.create') }}"
-                        :active="request()->routeIs('deudas.create')">
-                        Nuevo
-                    </x-dropdown-link>
-                    <x-dropdown-link href="{{ route('deudas.cotizar') }}" :active="request()->routeIs('deudas.cotizar')">
-                        Cotizar
-                    </x-dropdown-link>
+                    @role('owner')
+                        <x-dropdown-link href="{{ route('deudas.create') }}"
+                            :active="request()->routeIs('deudas.create')">
+                            Nuevo
+                        </x-dropdown-link>
+                        <x-dropdown-link href="{{ route('deudas.cotizar') }}"
+                            :active="request()->routeIs('deudas.cotizar')">
+                            Cotizar
+                        </x-dropdown-link>
+                    @endrole
                     <x-dropdown-link href="{{ route('deudas.index') }}" :active="request()->routeIs('deudas.index')">
                         Listado
                     </x-dropdown-link>
-
                     <x-dropdown-link href="{{ route('deudas.activos') }}"
                         :active="request()->routeIs('deudas.activos')">
                         Activos
@@ -60,11 +64,16 @@
                 </x-menu-item>
                 {{-- Sólo dueños --}}
                 @role('owner')
-                    <x-menu-item title="Empleados" icon="fa-user-tie" key="btn-empleados" routes="">
-                        <x-dropdown-link href="">Nuevo</x-dropdown-link>
-                        <x-dropdown-link href="">Activos</x-dropdown-link>
-                        <x-dropdown-link href="">Historial</x-dropdown-link>
+                    {{-- Empleados --}}
+                    <x-menu-item title="Empleados" icon="fa-user-tie" key="btn-empleados" routes="users.*">
+                        <x-dropdown-link href="{{ route('users.create') }}" :active="request()->routeIs('users.create')">
+                            Nuevo
+                        </x-dropdown-link>
+                        <x-dropdown-link href="{{ route('users.index') }}" :active="request()->routeIs('users.index')">
+                            Listado
+                        </x-dropdown-link>
                     </x-menu-item>
+                    {{-- Finanzas --}}
                     <x-menu-item title="Finanzas" icon="fa-hand-holding-usd" key="btn-ingresos" routes="">
                         <x-dropdown-link href="">Ingresos</x-dropdown-link>
                         <x-dropdown-link href="">Gastos</x-dropdown-link>
@@ -109,11 +118,18 @@
 
             </div>
         </div>
-        <a class="flex items-center justify-center -ml-2  w-full h-12 absolute bottom-0 text-black font-bold bg-two hover:bg-gray-700"
-            href="#">
-            <span class="far fa-user-circle text-2xl"> </span>
-            <span class="ml-2 text-base block pr-2">Mi Cuenta</span>
-        </a>
+        <div
+            class="flex items-center justify-center -ml-2  w-full h-12 absolute bottom-0 text-black font-bold bg-two 
+            ">
+           
+                <span class=" ml-2 text-sm block pr-2">
+                    @role('owner')
+                        Saldo: ${{ number_format(Auth::user()->negocio->balance->saldo_actual, 2) }}
+                    @endrole
+                </span>
+           
+
+        </div>
     </div>
     <!-- Component End  -->
 

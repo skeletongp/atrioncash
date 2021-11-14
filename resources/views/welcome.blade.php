@@ -39,7 +39,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:p-8 mx-8 md:mx-auto">
                     <div class=" py-4 ">
                         <div class="my-2 text-center uppercase text-base font-extrabold flex flex-col justify-between">
-                            Solicita más información y descubre cómo AtrionCash puede ayudarte en la gestión de tu negocio.
+                            Solicita más información y descubre cómo {{env('APP_NAME', 'AtrionCash')}} puede ayudarte en la gestión de tu negocio.
                         </div>
                         <a href="#">
                             <x-button

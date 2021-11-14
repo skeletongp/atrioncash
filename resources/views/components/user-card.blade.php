@@ -1,26 +1,30 @@
-@props(['url' => '', 'title', 'subtitle', 'edit', 'delete', 'bg', 'userId', 'isUser'=>false, 'show'=>''])
+@props(['url' => '', 'title', 'subtitle', 'edit', 'delete', 'bg', 'userId', 'isUser' => false, 'show' => '', 'data'=>''])
 <div
     class="card transition select-none bg-white h-56 -py-8 w-72  m-auto top-0 bottom-0 shadow-2xl transform hover:scale-105 overflow-hidden rounded-xl">
     <h2 class="transition flex flex-col space-y-0 font-bold text-blue-500 mt-28 dto-num">
         <span class="w-72 px-3 mx-auto overflow-ellipsis overflow-hidden whitespace-nowrap"> {{ $title }}</span>
         <small class="font-normal text-base">{{ $subtitle }}</small>
+        <small class="font-normal text-base">{{ $data }}</small>
     </h2>
-  <div class="cta-container transition text-center items-center flex space-x-2 mt-72 inset-x-1/4 absolute z-50 w-max">
-    <x-dropdown-link href="{{ $edit }}"
-        class="cta text-black border-2 border-blue-100 bg-two py-2 px-6 rounded-full text-lg font-bold">
-        <span class="fas fa-pen"></span>
-    </x-dropdown-link>
-    <form action="{{$delete}}" method="POST" id="d{{ $userId }}">
-        @csrf
-        @method('delete')
-        <x-dropdown-link form="d{{ $userId }}"
-            class="confirm cursor-pointer cta text-black border-2 border-blue-100 bg-red-400 py-2 px-6 rounded-full text-lg font-bold">
-            <span class="fas fa-trash"></span>
-        </x-dropdown-link>
-    </form>
-</div>
+    <div class="cta-container transition text-center items-center flex space-x-2 mt-72 inset-x-1/4 absolute z-50 w-max">
+        @role('owner')
+            <x-dropdown-link href="{{ $edit }}"
+                class="cta text-black border-2 border-blue-100 bg-two py-2 px-6 rounded-full text-lg font-bold">
+                <span class="fas fa-pen"></span>
+            </x-dropdown-link>
+            <form action="{{ $delete }}" method="POST" id="d{{ $userId }}">
+                @csrf
+                @method('delete')
+                <x-dropdown-link form="d{{ $userId }}" data-label="¿Eliminar del registro?"
+                    class="confirm cursor-pointer cta text-black border-2 border-blue-100 bg-red-400 py-2 px-6 rounded-full text-lg font-bold">
+                    <span class="fas fa-trash"></span>
+                </x-dropdown-link>
+            </form>
+        @endrole
+      
+    </div>
     <div class="card_circle bg-one h-96 -mt-72 pb-2 transition flex items-end justify-center">
-        <a href="{{$show}}">
+        <a href="{{ $show }}">
             <div class="h-16 w-16 rounded-full icon transition " style="background-image: url({{ $bg }})">
 
             </div>
@@ -99,7 +103,8 @@
         transform: scale(0.8);
         margin-bottom: 4.2rem;
     }
-    .card:hover .dto-num{
+
+    .card:hover .dto-num {
         white-space: nowrap;
 
     }
@@ -115,7 +120,7 @@
     }
 
     .card:hover h2 {
-        margin-top: 35px;
+        margin-top: 15px;
         color: #fff;
         padding-bottom: 0.5rem;
     }

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Cobros;
 use App\Http\Methods\Metodos2;
 use App\Models\Cuota;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Auth;
 
 class CuotaController extends Controller
@@ -70,6 +71,7 @@ class CuotaController extends Controller
                 $this->metodo->cobrarCuota($negocio, $cuota, $balance, $deuda, $cliente, $user, $request);
             }
         }
+        broadcast(new Cobros($user));
         return redirect()->route('deudas.show', $deuda);
         return $this->metodo->printPayedTicket($cuota, $user, $cliente, $negocio);
     }

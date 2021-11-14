@@ -10,15 +10,9 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 class Cliente extends Model
 {
     use HasFactory, SoftDeletes, SearchableTrait;
-   
+    public $incrementing = false; protected $keyType = 'string';
     protected $searchable = [
-        /**
-         * Columns and their priority in search results.
-         * Columns with higher values are more important.
-         * Columns with equal values have equal importance.
-         *
-         * @var array
-         */
+       
         'columns' => [
             'clientes.name' => 10,
             'clientes.lastname' => 10,

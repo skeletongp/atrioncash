@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Ramsey\Uuid\Uuid;
 class CreateCuotasTable extends Migration
 {
     /**
@@ -14,7 +14,7 @@ class CreateCuotasTable extends Migration
     public function up()
     {
         Schema::create('cuotas', function (Blueprint $table) {
-            $table->id();
+             $table->uuid('id')->primary();
             $table->decimal('saldo');
             $table->date('fecha');
             $table->enum('status',['pendiente','pagado']);
@@ -22,9 +22,9 @@ class CreateCuotasTable extends Migration
             $table->decimal('capital');
             $table->decimal('deber');
             $table->decimal('restante');
-            $table->foreignId('deuda_id')->constrained();
-            $table->foreignId('negocio_id')->constrained();
-            $table->foreignId('cliente_id')->constrained();
+            $table->foreignUuid('deuda_id')->constrained();
+            $table->foreignUuid('negocio_id')->constrained();
+            $table->foreignUuid('cliente_id')->constrained();
             $table->softDeletes();
             $table->timestamps();
         });

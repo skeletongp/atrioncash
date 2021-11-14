@@ -2,72 +2,115 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Methods\Metodos;
 use App\Http\Methods\Metodos2;
 use App\Http\Requests\AuthRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware(['role:admin'])->except('store');
+        $this->middleware(['auth', 'role:admin', 'suscribed'])->except('store');
     }
     public function index()
     {
-        //
+        $negocio = Auth::user()->negocio;
+        $users = $negocio->usuarios()->where('id', '!=', Auth::user()->id)->search(request('s'))->paginate(6);
+        return view('pages.users.index')
+            ->with([
+                'users' => $users,
+            ]);
     }
 
 
     public function create()
     {
-        //
+        return view('pages.users.create');
     }
 
 
     public function store(AuthRequest $request)
     {
         $data = $request->all();
-        
         $met = new Metodos2();
-        $negocio = $met->createNegocio($data);
+        $roles = ['owner' => 'Administrador', 'employee' => 'Empleado'];
+        if (Auth::user()) {
+            $negocio = Auth::user()->negocio;
+            $role = $request->role;
+            $rolename = $roles[$request->role];
+        } else {
+            $negocio = $met->createNegocio($data);
+            $role = 'owner';
+            $rolename = 'Administrador';
+        }
         $user = User::create([
+            'id' => Uuid::uuid1(),
             'name' => $data['name'],
             'lastname' => $data['lastname'],
+            'cedula' => $data['cedula'],
             'email' => $data['email'],
             'phone' => $data['phone'],
             'username' => $data['username'],
             'password' => bcrypt($data['password']),
-            'rolename' => 'Administrador',
+            'rolename' => $rolename,
             'negocio_id' => $negocio->id
         ]);
-        $user->syncRoles(['owner']);
-       
-        return redirect()->route('home');
+        $user->syncRoles([$role]);
+
+        return redirect()->route('users.show', $user);
     }
 
 
-    public function show($id)
+    public function show(User $user)
     {
+        return view('pages.users.show')
+            ->with([
+                'user' => $user
+            ]);
+    }
+
+
+    public function edit(User $user)
+    {
+        return view('pages.users.edit')
+            ->with([
+                'user' => $user
+            ]);
+    }
+
+
+    public function update(Request $request, User $user)
+    {
+        $data = $request->all();
+        unset($data['role']);
+        $user->update($data);
+        return redirect()->route('users.show', $user);
         //
     }
 
 
-    public function edit($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('users.index');
     }
-
-
-    public function update(Request $request, $id)
+    public function cobrar(User $user)
     {
-        //
-    }
-
-
-    public function destroy($id)
-    {
-        //
+       $met=new Metodos();
+       $monto=$user->saldo;
+       $balance=$user->negocio->balance;
+       $balance->saldo_actual=$balance->saldo_actual+$monto;
+       $balance->save();
+       $met->ajustarSaldoUsuario($user->id, $monto, 'resta');
+       return view('pages.pdfs.recibo_cobrador')
+       ->with([
+           'user'=>$user,
+           'admin'=>Auth::user(),
+           'monto'=>$monto
+       ]);
     }
 }

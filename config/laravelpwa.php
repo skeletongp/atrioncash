@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'name' => 'AtrionTech',
+    'name' => env('APP_NAME', 'AtrionCash'),
     'manifest' => [
         'name' => env('APP_NAME', 'AtrionCash'),
-        'short_name' => 'AtrionCash',
+        'short_name' => env('APP_NAME', 'AtrionCash'),
         'start_url' => '/',
         'background_color' => '#ffffff',
         'theme_color' => '#000000',

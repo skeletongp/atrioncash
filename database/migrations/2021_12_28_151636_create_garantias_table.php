@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Ramsey\Uuid\Uuid;
 class CreateGarantiasTable extends Migration
 {
     /**
@@ -14,14 +14,14 @@ class CreateGarantiasTable extends Migration
     public function up()
     {
         Schema::create('garantias', function (Blueprint $table) {
-            $table->id();
+             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('description');
             $table->string('photo');
             $table->enum('status',['recibido','devuelto']);
-            $table->foreignId('cliente_id')->constrained();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('negocio_id')->constrained();
+            $table->foreignUuid('cliente_id')->constrained();
+            $table->foreignUuid('user_id')->constrained();
+            $table->foreignUuid('negocio_id')->constrained();
             $table->timestamps();
         });
     }

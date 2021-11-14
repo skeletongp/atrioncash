@@ -7,7 +7,7 @@ use App\Models\Negocio;
 use App\Models\Partida;
 use App\Models\Plan;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Auth;
 use PDF;
 
@@ -15,8 +15,8 @@ class Metodos2
 {
     public function cobrarCuota($negocio, $cuota, $balance, $deuda, $cliente, $user, Request $request)
     {
+        $deber=$request->capital + $request->interes;
         /* Ajuste del Balance del negocio */
-        $balance->saldo_actual = $balance->saldo_actual + $request->capital + $request->interes;
         $balance->capital_cobrado = $balance->capital_cobrado + $request->capital;
         $balance->capital_prestado = $balance->capital_prestado - $request->capital;
         $balance->interes_cobrado = $balance->interes_cobrado + $request->interes;
@@ -26,12 +26,16 @@ class Metodos2
         $deuda->saldo_actual = $deuda->saldo_actual - $request->capital;
         $deuda->save();
 
-        /* Ajustar deduda del cliente */
+        /* Ajustar deuda del cliente */
         $met=new Metodos();
         $met->ajustarDeudaCliente($deuda->cliente_id, $request->capital, "resta");
 
+        /* Ajustar saldo del usuario */
+        $met->ajustarSaldoUsuario($user->id, $deber, 'suma' );
+        
         /* Ajuste de Partida */
         Partida::create([
+            'id'=>Uuid::uuid1(),
             'salida' => 0,
             'entrada' => $request->capital + $request->interes,
             'fecha' => date('Y-m-d'),
@@ -82,6 +86,7 @@ class Metodos2
     public function createBalance($balance)
     {
         $balance = Balance::create([
+            'id'=>Uuid::uuid1(),
             'saldo_inicial' => $balance,
             'saldo_actual' => $balance,
             'capital_cobrado' => 0,
@@ -95,6 +100,7 @@ class Metodos2
     {
         $balance = $this->createBalance($data['balance']);
         $negocio = Negocio::create([
+            'id'=>Uuid::uuid1(),
             'name' => $data['Nname'],
             'address' => $data['address'],
             'phone' => $data['Nphone'],
@@ -106,7 +112,7 @@ class Metodos2
     {
         $negocio=Auth::user()->negocio;
         $prox_pago=$this->getProxPago($plan->periodo);
-        $negocio->plan()->sync([$plan->id=>['status'=>'activo','prox_pago'=>$prox_pago]]);
+        $negocio->plan()->sync([$plan->id=>['status'=>'activo','prox_pago'=>$prox_pago,'id'=>Uuid::uuid1()]]);
     }
     public function getProxPago($periodo)
     {
