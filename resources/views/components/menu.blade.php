@@ -74,10 +74,17 @@
                         </x-dropdown-link>
                     </x-menu-item>
                     {{-- Finanzas --}}
-                    <x-menu-item title="Finanzas" icon="fa-hand-holding-usd" key="btn-ingresos" routes="">
-                        <x-dropdown-link href="">Ingresos</x-dropdown-link>
-                        <x-dropdown-link href="">Gastos</x-dropdown-link>
-                        <x-dropdown-link href="">Balance</x-dropdown-link>
+                    <x-menu-item title="Finanzas" icon="fa-hand-holding-usd" key="btn-ingresos" routes="partidas.*">
+                        <x-dropdown-link href="{{ route('partidas.ingresos') }}"
+                            :active="request()->routeIs('partidas.ingresos')">
+                            Ingresos
+                        </x-dropdown-link>
+                        <x-dropdown-link href="{{ route('partidas.egresos') }}"
+                            :active="request()->routeIs('partidas.egresos')">
+                            Gastos
+                        </x-dropdown-link>
+                        <x-dropdown-link href="{{ route('balances.index')}}"
+                            :active="request()->routeIs('balances.index')">Balance</x-dropdown-link>
                     </x-menu-item>
 
                     {{-- Contratos --}}
@@ -92,7 +99,7 @@
                     </x-menu-item>
 
                     {{-- Notarios --}}
-                    <x-menu-item title="Notarios" icon="fa-user-tie" key="btn-notarios" routes="notarios.*">
+                    <x-menu-item title="Notarios" icon="fa-user-tie " key="btn-notarios" routes="notarios.*">
                         <x-dropdown-link href="{{ route('notarios.create') }}"
                             :active="request()->routeIs('notarios.create')">
                             Crear</x-dropdown-link>
@@ -101,13 +108,17 @@
 
                         </x-dropdown-link>
                     </x-menu-item>
-                    <x-menu-item title="Ayuda" icon="fa-user-tie" key="btn-ayuda" routes="notarios.*">
+                    <x-menu-item title="Ayuda" icon="fa-question-circle" key="btn-ayuda" routes="notarios.*">
                         <x-dropdown-link href="{{ route('notarios.create') }}"
                             :active="request()->routeIs('notarios.create')">
-                            Crear</x-dropdown-link>
+                            Términos & Condiciones</x-dropdown-link>
                         <x-dropdown-link href="{{ route('notarios.index') }}"
-                            :active="request()->routeIs('notarios.index')">Ver
-
+                            :active="request()->routeIs('notarios.index')">
+                            Documentación
+                        </x-dropdown-link>
+                        <x-dropdown-link href="{{ route('notarios.index') }}"
+                            :active="request()->routeIs('notarios.index')">
+                            Hacer una pregunta
                         </x-dropdown-link>
                     </x-menu-item>
                 @endrole
@@ -128,15 +139,17 @@
             </div>
         </div>
         <div
-            class="flex items-center justify-center -ml-2  w-full h-12 absolute bottom-0 text-black font-bold bg-two 
+            class="flex items-center justify-center w-full h-10 absolute bottom-0 z-40 text-black font-bold bg-one 
             ">
-           
-                <span class=" ml-2 text-sm block pr-2">
-                    @role('owner')
-                        Saldo: ${{ number_format(Auth::user()->negocio->balance->saldo_actual, 2) }}
-                    @endrole
-                </span>
-           
+
+            <span class=" ml-2 text-sm block pr-2">
+                @role('owner')
+                    Saldo: ${{ number_format(Auth::user()->negocio->balance->saldo_actual, 2) }}
+                @else
+                    Saldo: ${{ number_format(Auth::user()->saldo, 2) }}
+                @endrole
+            </span>
+
 
         </div>
     </div>

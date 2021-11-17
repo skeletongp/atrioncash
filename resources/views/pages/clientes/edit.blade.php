@@ -53,7 +53,7 @@
                             <x-input-error for="cedula"></x-input-error>
                         </div>
                         <div class=" border-b px-3 shadow-sm py-2 md:py-4 ">
-                            <x-input class="w-full" type="tel" name="phone" required value="{{old('phone',$cliente->phone)}}">
+                            <x-input class="w-full" type="number" name="phone" required value="{{old('phone',$cliente->phone)}}">
                                 <x-slot name="label">
                                     Teléfono
                                 </x-slot>

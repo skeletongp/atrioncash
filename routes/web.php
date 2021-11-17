@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BalanceController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CuotaController;
 use App\Http\Controllers\DeudaController;
@@ -8,7 +9,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ContratoController;
 use App\Http\Controllers\NotarioController;
+use App\Http\Controllers\PartidaController;
 use App\Http\Controllers\UserController;
+use App\Models\Balance;
 use App\Models\Deuda;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +36,11 @@ Route::post('/auth/access', [AuthController::class, 'access'])->name('auth.acces
 Route::post('/auth/store', [AuthController::class, 'store'])->name('auth.store');
 
 Route::middleware(['auth', 'suscribed'])->group(function () {
+
+   /* Logged Auth Routes */
+   Route::get('/auth/profile', [AuthController::class, 'profile'])->name('auth.profile');
+   Route::get('/auth/{user}/edit', [AuthController::class, 'edit'])->name('auth.edit');
+   Route::post('/auth/{user}/update', [AuthController::class, 'update'])->name('auth.update');
 
    /* Home Routes */
    Route::get('/', function () {
@@ -65,6 +73,14 @@ Route::middleware(['auth', 'suscribed'])->group(function () {
    /* Contratos Routes */
    Route::get('contratos/{contrato}/contrato_cuota', [ContratoController::class, 'contrato_cuota'])->name('contratos.contrato_cuota');
    Route::resource('contratos', ContratoController::class)->names('contratos');
+
+   /* Balance Routes */
+   Route::resource('balances',BalanceController::class)->names('balances');
+
+    /* Partidas Routes */
+    Route::get('partidas/ingresos',[PartidaController::class,'ingresos'])->name('partidas.ingresos');
+    Route::get('partidas/egresos',[PartidaController::class,'egresos'])->name('partidas.egresos');
+    Route::get('partidas/create',[PartidaController::class,'create'])->name('partidas.create');
 
  
 });

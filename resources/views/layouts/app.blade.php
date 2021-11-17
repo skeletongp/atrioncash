@@ -7,7 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <meta name="google" content="notranslate" />
     <title>{{ config('app.name', 'AtrionCash') }}</title>
 
     <!-- Fonts -->
@@ -15,7 +15,7 @@
 
     <!-- Styles -->
     <link href="{{ mix('css/styles.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ mix('css/menu.css') }}">
     
     {{-- Styles CDN --}}

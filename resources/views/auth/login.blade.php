@@ -1,8 +1,14 @@
 @extends('layouts.app')
 <meta http-equiv="refresh" content="{{ config('session.lifetime') * 60 }}">
 @section('content')
-    <div class="h-screen font-sans  bg-cover bg-center" >
-        <div class="container mx-auto h-full flex flex-1 justify-center items-center">
+    <div class=" font-sans  bg-cover bg-center" >
+        <div class="pt-12">
+            @if (Session::has('success'))
+            <x-alert type="success"></x-alert>
+       
+        @endif
+        </div>
+        <div class="container mx-auto mt-8 flex flex-1 justify-center items-center">
             <div class="w-full max-w-lg">
                 <div class="leading-loose">
                     <form class="max-w-xl m-4 px-3 lg:px-10 pb-10 bg-white dark:bg-white  shadow-xl space-y-4 rounded-xl"
@@ -28,7 +34,6 @@
                         <div class="mt-6 flex items-center justify-between">
                             <x-dropdown-link class="text-blue-400 underline" href="{{route('auth.register')}}">Registrarse</x-dropdown-link>
                             <x-button class=" bg-one text-white rounded font-extrabold md:text-base" type="submit">Ingresar</x-button>
-                            
                         </div>
                        
                     </form>

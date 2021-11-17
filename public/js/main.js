@@ -67,41 +67,6 @@ $("document").ready(function () {
   $("form").one("submit", function () {
     $("#loader").toggleClass("hidden flex");
   });
-  /* Manejar notificaciones */
-
-  if (Notification.permission !== "denied") {
-    Notification.requestPermission().then(function (permission) {
-      // If the user accepts, let's create a notification
-      if (permission === "granted") {
-        sendNotify(message);
-      }
-    });
-  }
-
-  function sendNotify(message) {
-    navigator.serviceWorker.ready.then(function (registration) {
-      registration.showNotification(message);
-    });
-  }
-
-  function notifyMe(message) {
-    // Revisar si el navegador soporta las notificaciones
-    if (!("Notification" in window)) {
-      alert("This browser does not support desktop notification");
-    } // Revisar si tienen permiso de notiviar
-    else if (Notification.permission === "granted") {
-      // If it's okay let's create a notification
-      sendNotify(message);
-    } // Solicita persmiso si no lo tiene
-    else if (Notification.permission !== "denied") {
-      Notification.requestPermission().then(function (permission) {
-        // If the user accepts, let's create a notification
-        if (permission === "granted") {
-          sendNotify(message);
-        }
-      });
-    }
-  }
 });
 /******/ })()
 ;

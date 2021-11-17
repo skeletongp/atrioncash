@@ -1,12 +1,12 @@
 @extends('dashboard')
 
 @section('body')
-    <div class=" md:mt-16 pb-12  max-w-4xl mx-auto relative">
+    <div class=" md:mt-16 pb-12 pt-12  max-w-4xl mx-auto relative">
         <div class="w-max absolute left-1 top-0">
             <x-dropdown align="left">
                 <x-slot name="trigger">
                     <x-dropdown-link class="cursor-pointer">
-                        <span class="fas fa-plus "> </span>
+                        <span class="fas fa-list text-xl lg:text-3xl "> </span>
                     </x-dropdown-link>
                 </x-slot>
                 <x-slot name="content">

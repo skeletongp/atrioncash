@@ -18,7 +18,8 @@ class CreatePartidasTable extends Migration
             $table->decimal('entrada');
             $table->decimal('salida');
             $table->date('fecha');
-            $table->foreignUuid('cliente_id')->constrained();
+            $table->string('detalle')->default('Cobro de cuota');
+            $table->foreignUuid('cliente_id')->nullable()->constrained();
             $table->foreignUuid('user_id')->constrained();
             $table->foreignUuid('negocio_id')->constrained();
             $table->softDeletes();

@@ -104,6 +104,12 @@ class Metodos
     public function agregarPartida($entrada = 0, $salida = 0, $cliente_id)
     {
         $user = Auth::user();
+        if ($entrada>$salida) {
+            $detalle='Cobro de cuota';
+        } else {
+            $detalle="Préstamo otorgado";
+        }
+        
         Partida::create([
             'id'=>Uuid::uuid1(),
             'entrada' => $entrada,
@@ -112,6 +118,7 @@ class Metodos
             'cliente_id' => $cliente_id,
             'user_id' => $user->id,
             'negocio_id' => $user->negocio_id,
+            'detalle' => $detalle,
         ]);
     }
     public function crearCuotas($amortizacion, $data, $deuda_id, $cliente_id)

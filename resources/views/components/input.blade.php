@@ -1,4 +1,4 @@
-@props(['disabled' => false, 'class' => '', 'money'=>false, 'wLabel'=>'w-24'])
+@props(['disabled' => false, 'class' => '', 'inputClass'=>'', 'wLabel'=>'w-24'])
 
 
 <div class="bg-white dark:bg-gray-800 rounded-md"> 
@@ -12,7 +12,7 @@
             @endif
         </div>
         <input {{ $disabled ? 'disabled' : '' }}
-            class=" w-full outline-none text-gray-600  py-2 px-2 leading-tight  dark:text-gray-300 dark:bg-gray-800 "
+            class=" w-full outline-none text-gray-600  py-2 px-2 leading-tight  dark:text-gray-300 dark:bg-gray-800 {{$inputClass}}"
             {{ $attributes }} />
         <div class="mx-1 right-2 w-max">
             @if (isset($icon))

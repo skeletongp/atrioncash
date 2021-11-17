@@ -9,6 +9,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('cobros.{negocio_id}', function ($user, $negocio_id){
+   
     if ($user->negocio_id===$negocio_id) {
         return $user->hasRole('owner');
     }

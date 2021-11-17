@@ -10,3 +10,11 @@ window.Echo = new Echo({
     forceTLS: true,
 
 });
+self.addEventListener('notificationclick', function(event) {
+    const clickedNotification = event.notification;
+    clickedNotification.close();
+  
+    // Do something as the result of the notification click
+    clients.openWindow("https://atrioncash.com")
+    event.waitUntil(promiseChain);
+  });

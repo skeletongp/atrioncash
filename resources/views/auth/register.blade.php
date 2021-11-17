@@ -47,7 +47,7 @@
                             </div>
                             <div>
                                 <x-label for="phone">No. Teléfono</x-label>
-                                <x-input placeholder="No. Teléfono" type="tel" for="phone" name="phone" id="phone"
+                                <x-input placeholder="No. Teléfono" type="number" for="phone" name="phone" id="phone"
                                     value="{{ old('phone', request('phone')) }}">
                                     <x-slot name="icon"> <span class="fas fa-phone"></span></x-slot>
                                 </x-input>
@@ -69,7 +69,7 @@
                                 </div>
                                 <div>
                                     <x-label for="Nphone">No. Teléfono</x-label>
-                                    <x-input placeholder="No. Teléfono" type="tel" for="Nphone" name="Nphone" id="Nphone"
+                                    <x-input placeholder="No. Teléfono" type="number" for="Nphone" name="Nphone" id="Nphone"
                                         value="{{ old('Nphone', request('Nphone')) }}" required>
                                         <x-slot name="icon"> <span class="fas fa-phone"></span></x-slot>
                                     </x-input>
@@ -86,8 +86,8 @@
                                
                                 <div class="w-3/5 md:w-1/2">
                                     <x-label for="balance">Balance</x-label>
-                                    <x-input placeholder="Balance Inicial" type="text" for="balance" name="balance" id="balance"
-                                        value="{{ old('balance', request('balance')) }}" required>
+                                    <x-input placeholder="Balance Inicial" type="number" for="balance" name="balance" id="balance"
+                                        value="{{ old('balance', request('balance')) }}" min="5000" required>
                                         <x-slot name="icon"> <span class="fas fa-dollar-sign"></span></x-slot>
                                     </x-input>
                                     <x-input-error for="balance"></x-input-error>

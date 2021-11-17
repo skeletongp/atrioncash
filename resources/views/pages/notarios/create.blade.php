@@ -46,7 +46,7 @@
                             <x-input-error for="matricula">Notario ya registrado</x-input-error>
                         </div>
                         <div class=" border-b px-3 shadow-sm py-2 md:py-4 ">
-                            <x-input wLabel="w-28" class="w-full" type="tel" name="phone" value="{{old('phone')}}" placeholder="No. Teléfono"
+                            <x-input wLabel="w-28" class="w-full" type="number" name="phone" value="{{old('phone')}}" placeholder="No. Teléfono"
                                 required>
                                 <x-slot name="label">
                                     Teléfono

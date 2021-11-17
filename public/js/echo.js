@@ -25725,6 +25725,13 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   cluster: "us2",
   forceTLS: true
 });
+self.addEventListener('notificationclick', function (event) {
+  var clickedNotification = event.notification;
+  clickedNotification.close(); // Do something as the result of the notification click
+
+  clients.openWindow("https://atrioncash.com");
+  event.waitUntil(promiseChain);
+});
 })();
 
 /******/ })()

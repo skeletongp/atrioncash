@@ -30,7 +30,7 @@
                     class="w-full bg-one -mt-2 overflow-hidden overflow-ellipsis whitespace-nowrap text-white border-b-2 border-black">
                     {{ Auth::user()->fullname }}
                 </x-dropdown-link>
-                <x-dropdown-link class="flex items-center space-x-2">
+                <x-dropdown-link href="{{route('auth.profile')}}" class="flex items-center space-x-2">
                     <span class="far fa-user-circle text-xl w-8"></span>
                     <span>Mi cuenta</span>
                 </x-dropdown-link>
@@ -52,13 +52,15 @@
 
         @else
             <div class="w-screen h-screen max-w-7xl max-h-screen mx-auto md:p-4 pt-12 md:pt-16 pb-32 md:pb-4  bg-white ">
-                <h1 class="font-bold uppercase text-xl md:text-xl lg:text-4xl text-center my-2 lg:my-10">Bienvenido,
+                <h1
+                    class="font-bold uppercase text-xl md:text-xl lg:text-4xl text-center my-2 lg:my-10 w-full overflow-hidden overflow-ellipsis whitespace-nowrap">
+                    Bienvenido,
                     {{ Auth::user()->fullname }}</h1>
                 <div
                     class="grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto py-12 gap-6 bg-three rounded-xl p-3 text-center w-full">
                     <x-grid-stat
                         title="{{ '$' . number_format(Auth::user()->hasRole('owner') ? $balance->saldo_actual : Auth::user()->saldo, 2) }}"
-                        subtitle="Dinero en Saldo" actionText="Balance General" actionLink="" icon="fa-dollar-sign" />
+                        subtitle="Dinero en Saldo" actionText="Balance General" actionLink="{{ route('balances.index')}}" icon="fa-dollar-sign" />
                     <x-grid-stat title="{{ '$' . number_format($balance->capital_prestado, 2) }}" subtitle="Capital Prestado"
                         actionText="Ver Préstamos" actionLink="{{ route('deudas.index') }}"
                         icon="fas fa-file-invoice-dollar" />
@@ -72,14 +74,68 @@
                 </div>
             </div>
         @endif
-
     </div>
     <script>
+        /* Notificación de cobro */
         var channel = Echo.private("cobros.{{ Auth::user()->negocio_id }}");
         channel.listen("Cobros", function(data) {
-            message=data.user.name + ' ' + data.user.lastname + ' ha realizado un cobro';
-            notifyMe(message)
+            console.log(data)
+            message =
+                data.cliente.name +
+                " ha pagado " +
+                data.monto +
+                " a " + data.user.name;
+            const audio = new Audio("/tono.mp3");
+            audio.play();
+            notifyMe(message);
+
         });
 
+        /* Manejar notificaciones */
+        if (Notification.permission === "denied") {
+            Notification.requestPermission().then(function(permission) {
+                // If the user accepts, let's create a notification
+                if (permission === "granted") {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Ahora podrás recibir notificaciones',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            });
+        }
+
+        function sendNotify(message) {
+            navigator.serviceWorker.ready.then(function(registration) {
+                registration.showNotification(message);
+            });
+        }
+
+
+        function notifyMe(message) {
+            // Revisar si el navegador soporta las notificaciones
+            if (!("Notification" in window)) {
+                alert("This browser does not support desktop notification");
+            }
+
+            // Revisar si tienen permiso de notiviar
+            else if (Notification.permission === "granted") {
+                // If it's okay let's create a notification
+                sendNotify(message);
+            }
+
+            // Solicita persmiso si no lo tiene
+            else if (Notification.permission === "denied") {
+                Notification.requestPermission().then(function(permission) {
+                    // If the user accepts, let's create a notification
+                    if (permission === "granted") {
+                        sendNotify(message);
+                    }
+                });
+            }
+
+        }
     </script>
 @endsection

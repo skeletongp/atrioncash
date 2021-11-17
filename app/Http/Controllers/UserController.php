@@ -14,12 +14,12 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth', 'role:admin', 'suscribed'])->except('store');
+        $this->middleware(['auth', 'role:owner', 'suscribed'])->except('store');
     }
     public function index()
     {
         $negocio = Auth::user()->negocio;
-        $users = $negocio->usuarios()->where('id', '!=', Auth::user()->id)->search(request('s'))->paginate(6);
+        $users = $negocio->usuarios()->search(request('s'))->paginate(6);
         return view('pages.users.index')
             ->with([
                 'users' => $users,
@@ -61,15 +61,20 @@ class UserController extends Controller
         ]);
         $user->syncRoles([$role]);
 
-        return redirect()->route('users.show', $user);
+        return redirect()->route('auth.login', $user)
+        ->with([
+            'success'=>'Tu cuenta ha sido creada'
+        ]);
     }
 
 
     public function show(User $user)
     {
+        $partidas=$user->partidas()->paginate(9);
         return view('pages.users.show')
             ->with([
-                'user' => $user
+                'user' => $user,
+                'partidas' => $partidas,
             ]);
     }
 

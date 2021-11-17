@@ -53,6 +53,7 @@ class CuotaController extends Controller
             $deuda = $cuota->deuda;
             $balance = $negocio->balance;
             $cliente = $deuda->cliente;
+            $monto='$'.number_format($request->capita+$request->interes,2);
             $user = Auth::user();
             if ($deuda->type === 'cuota') {
                 $cuota->status = 'pagado';
@@ -70,10 +71,12 @@ class CuotaController extends Controller
                 $cuota->save();
                 $this->metodo->cobrarCuota($negocio, $cuota, $balance, $deuda, $cliente, $user, $request);
             }
+            broadcast(new Cobros($user, $cliente, $monto));
+            return redirect()->route('deudas.show', $deuda);
         }
-        broadcast(new Cobros($user));
-        return redirect()->route('deudas.show', $deuda);
-        return $this->metodo->printPayedTicket($cuota, $user, $cliente, $negocio);
+        return redirect()->route('deudas.show', $cuota->deuda);
+      
+        /* return $this->metodo->printPayedTicket($cuota, $user, $cliente, $negocio); */
     }
 
 

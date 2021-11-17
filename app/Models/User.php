@@ -16,6 +16,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, SearchableTrait, SoftDeletes;
     public $incrementing = false; protected $keyType = 'string';
+    
     protected $searchable = [
        
         'columns' => [
@@ -39,21 +40,12 @@ class User extends Authenticatable
         'id'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array
-     */
+   
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
@@ -70,4 +62,13 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Negocio::class);
     }
+    public function partidas()
+    {
+        return $this->hasMany(Partida::class);
+    }
+    public function cuotas()
+    {
+        return $this->hasMany(Cuota::class);
+    }
+   
 }

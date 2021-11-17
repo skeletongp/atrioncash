@@ -15,17 +15,28 @@ class Cobros implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
-    public function __construct($user)
+    public $user, $cliente, $monto;
+    public function __construct($user, $cliente, $monto)
     {
-        $this->user=$user;
-        
+        $this->user = $user;
+        $this->cliente = $cliente;
+        $this->monto = $monto;
     }
 
-   
+
     public function broadcastOn()
     {
-     
-        return new PrivateChannel('cobros.'.$this->user->negocio_id);
+
+        return new PrivateChannel('cobros.' . $this->user->negocio_id);
+    }
+
+    public function broadcastWith()
+    {
+        return [
+            'store' => $this->user->negocio,
+            'user' => $this->user,
+            'cliente' => $this->cliente,
+            'monto' => $this->monto,
+        ];
     }
 }

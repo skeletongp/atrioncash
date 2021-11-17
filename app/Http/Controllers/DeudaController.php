@@ -21,7 +21,7 @@ class DeudaController extends Controller
     public function index()
     {
         $negocio = Auth::user()->negocio;
-        $query=$negocio->deudas();
+        $query=$negocio->deudas()->orderBy('saldo_actual','desc');
         $deudas = $this->met->queryFiltrado(null, $query );
         return view('pages.deudas.index')
         ->with([

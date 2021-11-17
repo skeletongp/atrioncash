@@ -33,7 +33,10 @@ class Negocio extends Model
     {
        return $this->hasMany(Cuota::class);
     }
-
+    public function partidas()
+    {
+       return $this->hasMany(Partida::class);
+    }
     public function deudas()
     {
         return $this->hasMany(Deuda::class);
@@ -52,7 +55,7 @@ class Negocio extends Model
     {
         $today=new DateTime(now());
         $date=$this->created_at;
-        if ($today->diff($date)->days<15) {
+        if ($today->diff($date)->days<3) {
             return true;
         }
         return false;

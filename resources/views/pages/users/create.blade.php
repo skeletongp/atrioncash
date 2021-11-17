@@ -45,7 +45,7 @@
                     <x-input-error for="email"></x-input-error>
                 </div>
                 <div>
-                    <x-input placeholder="No. Teléfono" type="tel" for="phone" name="phone" id="phone"
+                    <x-input placeholder="No. Teléfono" type="number" for="phone" name="phone" id="phone"
                         value="{{ old('phone', request('phone')) }}">
                         <x-slot name="label">Teléfono</x-slot>
                         <x-slot name="icon"> <span class="fas fa-phone"></span></x-slot>

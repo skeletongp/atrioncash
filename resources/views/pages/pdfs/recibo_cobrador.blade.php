@@ -37,7 +37,10 @@
                 </tbody>
             </table>
             <h1 class="text-center m-1 mt-4"><b>Recibió:</b>_____________________________</h1>
-
+            <div class="flex justify-between uppercase hide-print mt-6">
+                <x-button id="print" class="bg-one text-white">Imprimir</x-button>
+                <x-button id="back" class="bg-one text-white">Volver</x-button>
+            </div>
 
 
     </section>
@@ -109,12 +112,12 @@
 
 </style>
 <script>
-    $('document').ready(function() {
+     $('#print').click(function() {
         window.print();
     })
-    window.onafterprint = function() {
-       location.href='/';
-    }
+    $('#back').click(function() {
+        location.href='/';
+    })
 </script>
 
 </html>

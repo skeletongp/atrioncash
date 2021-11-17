@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 class AuthRequest extends FormRequest
 {
@@ -20,6 +21,11 @@ class AuthRequest extends FormRequest
         $pos=strpos($this->email,'@');
         $username=substr($this->email, 0, $pos);
         $this->request->add(['username'=>$username]);
+        if (!$this->role && Auth::user()) {
+            $this->request->add(['role' => 'employee']);
+        } elseif (!Auth::user()){
+            $this->request->add(['role' => 'owner']);
+        }
         if (!$this->id ) { //Si el usuario es nuevo
             $this->request->add(['password' => $username]);
             $this->request->add(['password_confirmation' => $username]);
@@ -36,11 +42,12 @@ class AuthRequest extends FormRequest
         return [
             'fullname'=>'required|max:120',
             'name'=>'required|max:50',
-            'phone'=>'required|max:12',
+            'phone'=>'required|max:12|regex:/8[0,2,4]9[0-9]{7}',
             'cedula'=>'required|max:13|unique:users,cedula|regex:/[0-9]{3}-[0-9]{7}-[0-9]{1}/',
             'email'=>'required|unique:users,email,'.$this->id.',id,deleted_at,NULL',
             'lastname'=>'required|max:50',
             'password'=>'required|confirmed|min:6',
+            'role'=>'required'
         ];
     }
 }
